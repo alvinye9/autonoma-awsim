@@ -163,7 +163,7 @@ public class VehicleDataPublisher : Publisher<VehicleData>
             vehSim.steering_wheel_angle
         });
 
-        Debug.Log($"publishing steer angle {vehSim.steering_wheel_angle}");
+        //Debug.Log($"publishing steer angle {vehSim.steering_wheel_angle}");
 
         canBrakePressureReportPublisher.Publish(new List<double>{
             canBrakePressureReportPublisher.GetCounterNext(), // counter

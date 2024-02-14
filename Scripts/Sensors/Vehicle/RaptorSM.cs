@@ -22,10 +22,12 @@ public class RaptorSM : MonoBehaviour
 	public int current_flag = 0;
 	public int current_sys = 1;
 	private bool hot_start = false;
+	
 
 	void Start()
 	{
 		hot_start = GameManager.Instance.Settings.myScenarioObj.HotStart;
+		Debug.Log(hot_start);
 	}
 	void Update()
 	{

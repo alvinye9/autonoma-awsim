@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
 
         if( Status == SimulationState.RESTART )
         {
+            Debug.Log("Changing to Driving Scene");
             StartCoroutine(ChangeScene("DrivingScene"));
             Status = SimulationState.DRIVE;
         } 

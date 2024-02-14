@@ -58,6 +58,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnVehicle(int idx)
     {
+        //Object, Position, Rotation
         GameObject vehicleInstance = Instantiate(vehiclePrefab, 
             trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
             transform.rotation);
@@ -71,6 +72,8 @@ public class SpawnManager : MonoBehaviour
         vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
 
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
+
+       
     
         for(int i = 0; i < vehicleCameras.Length; i++) 
         {
@@ -82,7 +85,8 @@ public class SpawnManager : MonoBehaviour
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
-            pub.ToggleActive(isROS);
+            //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
         }
 
         // Handle the enabling/disabling of Inputs based on ControlType
@@ -90,11 +94,13 @@ public class SpawnManager : MonoBehaviour
         KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
         foreach (KeyboardInputs ki in keyboardInputs)
         {
-            ki.gameObject.SetActive(!isROS);
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
         }
         foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
         {
-            vi.gameObject.SetActive(isROS);
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
         }
     }
 

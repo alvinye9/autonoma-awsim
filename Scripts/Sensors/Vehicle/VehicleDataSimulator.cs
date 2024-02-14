@@ -120,7 +120,8 @@ public class VehicleDataSimulator : MonoBehaviour
         rr_brake_temp = 50.0f;
 
         battery_voltage = 13.0f;
-        safety_switch_state = 0;
+        //safety_switch_state = 0; //FIXME
+        safety_switch_state = 4;
         mode_switch_state = true;
         accel_pedal_input = carController.throttleCmd * 100;
         accel_pedal_output = carController.thrApplied *100;
