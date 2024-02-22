@@ -115,17 +115,17 @@ public class SpawnManager : MonoBehaviour
         {
             case RuntimePlatform.OSXEditor:
             case RuntimePlatform.OSXPlayer:
-                bundleName = "osx_racetracks.v1";
+                bundleName = "osx_racetracks.v2";
                 break;
 
             case RuntimePlatform.LinuxPlayer:
             case RuntimePlatform.LinuxEditor:
-                bundleName = "linux_racetracks.v1";
+                bundleName = "linux_racetracks.v2";
                 break;
 
             case RuntimePlatform.WindowsPlayer:
             case RuntimePlatform.WindowsEditor:
-                bundleName = "windows_racetracks.v1";
+                bundleName = "windows_racetracks.v2";
                 break;
 
             default:
