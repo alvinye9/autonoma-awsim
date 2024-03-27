@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SkidpadParams
   m_EditorClassIdentifier: 
   TrackName: GiantSkidpad
-  LAT_ORIGIN: 45.6
-  LON_ORIGIN: 9.3
+  LAT_ORIGIN: 45.618974079378670
+  LON_ORIGIN: 9.281181751068655
   HEIGHT_ORIGIN: 0
   trackRotation: {x: 0, y: 0, z: 0}
   carRotation: {x: 0, y: 0, z: 0}
