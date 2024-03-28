@@ -21,7 +21,7 @@ public class TrackParams : ScriptableObject
 {
     public string TrackName;
     //public GameObject prefab;
-    public double LAT_ORIGIN = 0.0000000;
+    public double LAT_ORIGIN = 0.0000000; //changing this wont change anything, reference SpawnManager.cs instead
     public double LON_ORIGIN = 0.0000000;
     public double HEIGHT_ORIGIN = 0.0;
     public Vector3 trackRotation = new Vector3(0f, 0f, 0f);
@@ -33,7 +33,7 @@ public class TrackParams : ScriptableObject
         new Vector3(0f, 0f, 0f)
     };
     public TrackInfo trackInfo;
-    public void populateStartPositions()
+    public void populateStartPositions() //generate a sequence of start posiitons
     {
         for (int i = 0; i < 51; i++)
         {

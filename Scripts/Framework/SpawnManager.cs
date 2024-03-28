@@ -29,6 +29,8 @@ public class SpawnManager : MonoBehaviour
     public GlobalCameraManager globalCameraManager;
     private AssetBundle myLoadedAssetBundle = null;
 
+
+
     private void Awake()
     {
         globalCameraManager = FindObjectOfType<GlobalCameraManager>();
@@ -36,8 +38,30 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        trackParams = GameManager.Instance.Settings.myTrackParams;
-        trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1);
+        trackParams = GameManager.Instance.Settings.myTrackParams; //default track params are from the map's respective .asset file
+
+        // trackParams.LAT_ORIGIN = 45.618974079378670; //will not change spawn beahvior, only what the gnsssimulator publishes    
+        // trackParams.LON_ORIGIN = 9.281181751068655; //MONZA_default
+        // trackParams.LAT_ORIGIN = 0.618974079378670; 
+        // trackParams.LON_ORIGIN = 0.281181751068655;
+        // trackParams.carRotation = new Vector3(0f, 45f, 0f); //this will change both the gnss sensors and the way the car spawns in the sim (+y is +azimuth +NED_yaw)
+        Debug.Log("Track Name: " + trackParams.TrackName);
+        Debug.Log("LAT_ORIGIN: " + trackParams.LAT_ORIGIN);
+        Debug.Log("LON_ORIGIN: " + trackParams.LON_ORIGIN);
+        Debug.Log("HEIGHT_ORIGIN: " + trackParams.HEIGHT_ORIGIN);  
+        Debug.Log("carRotation: " + trackParams.carRotation); 
+
+        trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1); //remove all but the first spawn position
+
+        // // Change the spawn position of the first vehicle relative to origin, default is (0.0, -6.0, 0.0) //likely wont need to change this, (+y is UP)
+        // ChangeSpawnPosition(new Vector3(0f, -6f, 0f), 0);
+        // Debug.Log("Printing Car Spawn Positions After Modifications:");
+        // foreach (var position in trackParams.carSpawnPositions)
+        // {
+        //     Debug.Log(position.ToString());
+        // }
+
+
         trackParams.populateStartPositions();
 
         SpawnEnvironment();
@@ -45,6 +69,19 @@ public class SpawnManager : MonoBehaviour
         for (int i = 0; i < GameManager.Instance.Settings.myScenarioObj.NumCars; i++)
         {   
             SpawnVehicle(i);
+        }
+    }
+
+    // Method to change spawn position //Added
+    public void ChangeSpawnPosition(Vector3 newPosition, int spawnIndex)
+    {
+        if (trackParams != null && spawnIndex >= 0 && spawnIndex < trackParams.carSpawnPositions.Count)
+        {
+            trackParams.carSpawnPositions[spawnIndex] = newPosition;
+        }
+        else
+        {
+            Debug.LogWarning("Invalid spawn position index or TrackParams reference is null.");
         }
     }
 
@@ -62,7 +99,6 @@ public class SpawnManager : MonoBehaviour
         GameObject vehicleInstance = Instantiate(vehiclePrefab, 
             trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
             transform.rotation);
-
         vehicleInstance.transform.Rotate(trackParams.carRotation);
 
         raceControlMenu.rosCars.Add(vehicleInstance);
@@ -157,4 +193,5 @@ public class SpawnManager : MonoBehaviour
             Instantiate(track);
         }
     }
+
 }

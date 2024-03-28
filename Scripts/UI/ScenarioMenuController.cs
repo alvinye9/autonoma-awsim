@@ -23,6 +23,7 @@ using TMPro;
 using System.Text.RegularExpressions;
 using System;
 
+
 public class ScenarioMenuController : MonoBehaviour
 {
     public List<ScenarioObj> LoadedScenarioObjs;
@@ -54,6 +55,15 @@ public class ScenarioMenuController : MonoBehaviour
     public TMP_InputField[] carSpawnPosInput = new TMP_InputField[3];
     public TMP_InputField[] carNumInput = new TMP_InputField[3];
     public TMP_InputField[] rosDomainInput = new TMP_InputField[3];
+
+    // public TMP_InputField[] latLonHeightYawInput = new TMP_InputField[4];
+
+
+    private float lat_input;
+    private float lon_input;
+    private float height_input;
+    private float yaw_input;
+
     
     private void Awake()
     {  
@@ -420,6 +430,10 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myTrackParams = LoadedTrackList.MyTrackList[tmpScenarioObj.SelectedTrack];
         GameManager.Instance.ChangeStateTo(GameManager.SimulationState.DRIVE);
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene("DrivingScene"));
+        GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = lat_input;
+        GameManager.Instance.Settings.myTrackParams.LON_ORIGIN = lon_input;
+        GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = height_input;
+        GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input; 
     }
 
     private void updateTmpScenario()
@@ -518,5 +532,74 @@ public class ScenarioMenuController : MonoBehaviour
             outField = -1;
         }
         return outField;
+    }
+
+
+
+    private bool TryParseDouble(string input, out double result)
+    {
+        return double.TryParse(input, out result);
+    }
+    // public void ReadLatInput(string input)
+    // {
+    //     if (TryParseDouble(input, out double latValue))
+    //     {
+    //         // Successfully parsed, update LAT_ORIGIN
+    //         GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = (float)latValue;
+    //     }
+    //     else
+    //     {
+    //         // Failed to parse, log error or handle as needed
+    //         Debug.LogError("Failed to parse LAT input value.");
+    //     }
+    // }
+    public void ReadLatInput(string input)
+    {
+        if (float.TryParse(input, out float latValue))
+        {
+            lat_input  = latValue;
+            Debug.Log(latValue);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input);
+        }
+    }
+    public void ReadLonInput(string input)
+    {
+        if (float.TryParse(input, out float lonValue))
+        {
+            lon_input  = lonValue;
+            Debug.Log(lonValue);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input);
+        }
+    }
+    public void ReadHeightInput(string input)
+    {
+        if (float.TryParse(input, out float heightValue))
+        {
+            height_input  = heightValue;
+            Debug.Log(heightValue);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input);
+        }
+    }
+
+    public void ReadYawInput(string input)
+    {
+        if (float.TryParse(input, out float yawValue))
+        {
+            yaw_input  = yawValue;
+            Debug.Log(yawValue);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input);
+        }
     }
 }
