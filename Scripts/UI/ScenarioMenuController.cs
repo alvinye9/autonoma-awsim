@@ -60,7 +60,8 @@ public class ScenarioMenuController : MonoBehaviour
 
 
     private float lat_input;
-    private float lon_input;
+    private float lon_input; //initializes as 0.0f
+
     private float height_input;
     private float yaw_input;
 
@@ -430,10 +431,15 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myTrackParams = LoadedTrackList.MyTrackList[tmpScenarioObj.SelectedTrack];
         GameManager.Instance.ChangeStateTo(GameManager.SimulationState.DRIVE);
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene("DrivingScene"));
+
+        if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("GiantSkidpad")) //only change lat/lon/height/yaw values for skidpad
+        {
         GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = lat_input;
         GameManager.Instance.Settings.myTrackParams.LON_ORIGIN = lon_input;
         GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = height_input;
-        GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input; 
+        GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input;
+        }
+         
     }
 
     private void updateTmpScenario()
@@ -535,24 +541,6 @@ public class ScenarioMenuController : MonoBehaviour
     }
 
 
-
-    private bool TryParseDouble(string input, out double result)
-    {
-        return double.TryParse(input, out result);
-    }
-    // public void ReadLatInput(string input)
-    // {
-    //     if (TryParseDouble(input, out double latValue))
-    //     {
-    //         // Successfully parsed, update LAT_ORIGIN
-    //         GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = (float)latValue;
-    //     }
-    //     else
-    //     {
-    //         // Failed to parse, log error or handle as needed
-    //         Debug.LogError("Failed to parse LAT input value.");
-    //     }
-    // }
     public void ReadLatInput(string input)
     {
         if (float.TryParse(input, out float latValue))

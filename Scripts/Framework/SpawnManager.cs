@@ -42,8 +42,6 @@ public class SpawnManager : MonoBehaviour
 
         // trackParams.LAT_ORIGIN = 45.618974079378670; //will not change spawn beahvior, only what the gnsssimulator publishes    
         // trackParams.LON_ORIGIN = 9.281181751068655; //MONZA_default
-        // trackParams.LAT_ORIGIN = 0.618974079378670; 
-        // trackParams.LON_ORIGIN = 0.281181751068655;
         // trackParams.carRotation = new Vector3(0f, 45f, 0f); //this will change both the gnss sensors and the way the car spawns in the sim (+y is +azimuth +NED_yaw)
         Debug.Log("Track Name: " + trackParams.TrackName);
         Debug.Log("LAT_ORIGIN: " + trackParams.LAT_ORIGIN);

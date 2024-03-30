@@ -1335,7 +1335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 679896285, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
       propertyPath: m_text
-      value: Lat, Lon, Height,Yaw (for skidpad ONLY)
+      value: Lat, Lon, Height,Yaw (skidpad ONLY)
       objectReference: {fileID: 0}
     - target: {fileID: 208055274179029940, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1871,13 +1871,25 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6592863211555742981, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
       propertyPath: m_text
-      value: 'Latitude
+      value: 'Latitude [-90,90]
 
 '
       objectReference: {fileID: 0}
     - target: {fileID: 6592863212226825556, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
       propertyPath: m_text
-      value: 'Longitude
+      value: 'Longitude [-90,90]
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592863212357342790, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
+      propertyPath: m_text
+      value: 'Yaw [deg]
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592863212554104328, guid: 599ea09e49ee16ff6a4356c69b1b1365, type: 3}
+      propertyPath: m_text
+      value: 'Height [m]
 
 '
       objectReference: {fileID: 0}
