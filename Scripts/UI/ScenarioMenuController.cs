@@ -439,6 +439,11 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = height_input;
         GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input;
         }
+
+        if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("LVMS")) //change car spawn position for LVMS
+        {
+        GameManager.Instance.Settings.myTrackParams.carSpawnPositions[0] = new Vector3(-450f, -12f, 0f);
+        }
          
     }
 

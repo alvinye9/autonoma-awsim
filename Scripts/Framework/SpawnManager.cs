@@ -52,7 +52,7 @@ public class SpawnManager : MonoBehaviour
         trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1); //remove all but the first spawn position
 
         // // Change the spawn position of the first vehicle relative to origin, default is (0.0, -6.0, 0.0) //likely wont need to change this, (+y is UP)
-        // ChangeSpawnPosition(new Vector3(0f, -6f, 0f), 0);
+        // ChangeSpawnPosition(new Vector3(-450f, -6f, 0f), 0); //LVMS spawn
         // Debug.Log("Printing Car Spawn Positions After Modifications:");
         // foreach (var position in trackParams.carSpawnPositions)
         // {
@@ -187,7 +187,7 @@ public class SpawnManager : MonoBehaviour
                 return;
             }
 
-            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName);
+            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //where is this changed?
             Instantiate(track);
         }
     }

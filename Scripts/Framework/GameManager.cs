@@ -29,7 +29,7 @@ public enum GameResetReason
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {get; private set;}
+    public static GameManager Instance {get; private set;} //allows gamemanager instance to be used
     public SettingsManager Settings {get; private set;}
     public BaseUIManager UIManager {get; private set;}
 
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
     public OnResetEventDelegate onGameResetDelegate;
     
-    public enum SimulationState
+    public enum SimulationState 
     {
         MENU = 0,
         LOADING = 1,
