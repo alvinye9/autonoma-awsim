@@ -187,8 +187,25 @@ public class SpawnManager : MonoBehaviour
                 return;
             }
 
-            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //where is this changed?
-            Instantiate(track);
+            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //trackName is read from tracklist
+
+            //The following presets are based on the PAIR vegas2.csv racelines
+            if(trackName.Equals("LVMS.prefab"))
+            {
+                Debug.Log("INSTANTIATING LVMS TRACK");
+                // Specify the position, rotation, and scale for the new track instance
+                Vector3 position = new Vector3(345f, 8f, 465f); //works but straightway seems too long 
+                // Vector3 position = new Vector3(355f, 8f, 460f); 
+                Quaternion rotation = Quaternion.Euler(0, 180f, 0);  
+                // Vector3 scale = new Vector3(1, 1, 1); 
+                Instantiate(track, position,rotation);
+            }
+            else
+            {
+                Debug.Log("INSTANTIATING TRACK: "+ trackName);
+                Instantiate(track);
+            }
+            
         }
     }
 

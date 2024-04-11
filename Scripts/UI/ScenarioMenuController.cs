@@ -432,7 +432,7 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.ChangeStateTo(GameManager.SimulationState.DRIVE);
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene("DrivingScene"));
 
-        if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("GiantSkidpad")) //only change lat/lon/height/yaw values for skidpad
+        if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("GiantSkidpad")) //only allow custom lat/lon/height/yaw values for skidpad
         {
         GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = lat_input;
         GameManager.Instance.Settings.myTrackParams.LON_ORIGIN = lon_input;
@@ -440,10 +440,10 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input;
         }
 
-        if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("LVMS")) //change car spawn position for LVMS
-        {
-        GameManager.Instance.Settings.myTrackParams.carSpawnPositions[0] = new Vector3(-450f, -12f, 0f);
-        }
+        // if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("LVMS")) //change car spawn position for LVMS in SpawnManager instead...
+        // {
+        // GameManager.Instance.Settings.myTrackParams.carSpawnPositions[0] = new Vector3(-450f, -12f, 0f);
+        // }
          
     }
 
