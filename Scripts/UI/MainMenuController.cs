@@ -30,6 +30,7 @@ public class MainMenuController : MonoBehaviour
     public GameObject SupportPanel;
     void Start()
     {
+        Debug.Log("Starting MainMenuController");
         SupportPanel.gameObject.SetActive(false);
         CreateScenarioButton.onClick.AddListener( GameManager.Instance.UIManager.OnScenarioMenuPressed );
         LicenseButton.onClick.AddListener( GameManager.Instance.UIManager.OnLicenseMenuPressed );

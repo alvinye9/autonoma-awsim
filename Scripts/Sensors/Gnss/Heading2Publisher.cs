@@ -47,7 +47,7 @@ public class Heading2Publisher : Publisher<HEADING2>
         
         msg.Pos_type = new PositionOrVelocityType();
         msg.Pos_type.Type = 50;
-        msg.Heading = heading2Sim.heading2;
+        msg.Heading = heading2Sim.heading2; //FIXME, added 90
         msg.Heading_stdev = 2.13f;
         msg.Num_sv_tracked = 15;
         msg.Num_sv_in_sol = 12;
