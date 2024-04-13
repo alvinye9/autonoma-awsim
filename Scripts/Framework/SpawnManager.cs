@@ -194,11 +194,11 @@ public class SpawnManager : MonoBehaviour
             {
                 Debug.Log("INSTANTIATING LVMS TRACK");
                 // Specify the position, rotation, and scale for the new track instance
-                Vector3 position = new Vector3(345f, 8f, 465f); //works but straightway seems too long 
-                // Vector3 position = new Vector3(355f, 8f, 460f); 
+                Vector3 position = new Vector3(262f, 11.5f, 368f);  
                 Quaternion rotation = Quaternion.Euler(0, 180f, 0);  
-                // Vector3 scale = new Vector3(1, 1, 1); 
-                Instantiate(track, position,rotation);
+                Vector3 scale = new Vector3(0.8f, 1f, 0.8f); 
+                GameObject instantiatedTrack = Instantiate(track, position, rotation);
+                instantiatedTrack.transform.localScale = scale;
             }
             else
             {

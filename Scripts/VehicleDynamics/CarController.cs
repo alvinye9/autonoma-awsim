@@ -73,14 +73,16 @@ public class CarController : MonoBehaviour
 
     void calcWheelStAngle()
     {   
-        if (physicalActuator)
+        if (physicalActuator) //this is triggered
         {
             steerAngleCmdBufPrev = steerAngleCmdBuf;
             steerAngleCmdBuf = HelperFunctions.pureDelay(steerAngleCmd,steerAngleCmdBufPrev, vehicleParams.steeringDelay);
             steerAngleApplied = steerAngleCmdBuf[vehicleParams.steeringDelay-1];
+            // Apply low pass filter and rate limiting to prevent abrupt changes in the applied steering angle
             steerAngleApplied = HelperFunctions.lowPassFirstOrder(steerAngleApplied,steerAngleAppliedPrev,vehicleParams.steeringBandwidth);
             steerAngleApplied = HelperFunctions.rateLimit(steerAngleApplied, steerAngleAppliedPrev , Mathf.Abs(vehicleParams.steeringRate/vehicleParams.steeringRatio));
             steerAngleAppliedPrev = steerAngleApplied;
+            // Debug.Log("Steer Angle Cmd: " + steerAngleCmd + " Steer Angle Applied: " + steerAngleApplied);
         }
         else
         {
