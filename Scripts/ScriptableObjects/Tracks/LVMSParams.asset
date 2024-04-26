@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: LVMSParams
   m_EditorClassIdentifier: 
   TrackName: LVMS
-  LAT_ORIGIN: 36.268833
-  LON_ORIGIN: -115.013202
+  LAT_ORIGIN: 36.274499
+  LON_ORIGIN: -115.012626
   HEIGHT_ORIGIN: 568.974
-  trackRotation: {x: 0, y: -45, z: 0}
-  carRotation: {x: 0, y: 107, z: 0}
+  trackRotation: {x: 0, y: 180, z: 0}
+  carRotation: {x: 0, y: 230, z: 0}
   trackScaling: {x: 1, y: 1, z: 1}
   spawnDeltaPos: {x: 0, y: 0, z: -10}
   carSpawnPositions:

@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using ROS2;
 
 public class SpawnManager : MonoBehaviour 
 {
@@ -68,6 +69,9 @@ public class SpawnManager : MonoBehaviour
         {   
             SpawnVehicle(i);
         }
+    
+        // Call the function to spawn a second vehicle in a different ROS domain ID //debuggin...
+        // SpawnVehicleInROSDomain(2, 1234); // Replace 1234 with the desired ROS domain ID
     }
 
     // Method to change spawn position //Added
@@ -137,7 +141,15 @@ public class SpawnManager : MonoBehaviour
             vi.gameObject.SetActive(true);
         }
     }
+    // // Function to spawn a vehicle in a specified ROS domain ID
+    // public void SpawnVehicleInROSDomain(int idx, int rosDomainID)
+    // {
+    //     // Initialize ROS with the specified domain ID
+    //     Ros.Init(rosDomainID);
 
+    //     // Call the existing SpawnVehicle method to spawn the vehicle
+    //     SpawnVehicle(idx);
+    // }
     public void SpawnEnvironment()
     {
         string path = Application.streamingAssetsPath;//"Assets/Autonoma/Environments/";
@@ -189,14 +201,15 @@ public class SpawnManager : MonoBehaviour
 
             GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //trackName is read from tracklist
 
-            //The following presets are based on the PAIR vegas2.csv racelines
+            
             if(trackName.Equals("LVMS.prefab"))
             {
                 Debug.Log("INSTANTIATING LVMS TRACK");
                 // Specify the position, rotation, and scale for the new track instance
-                Vector3 position = new Vector3(262f, 9f, 368f);  
+                // Vector3 position = new Vector3(262f, 9f, 368f); //(Car Rotation 107 deg) (based on the PAIR vegas2.csv raceline)
+                Vector3 position = new Vector3(205f, 8.75f, -257f);  //(Car Rotation 230 deg NED) to start at starting line
                 Quaternion rotation = Quaternion.Euler(0, 180f, 0);  
-                Vector3 scale = new Vector3(0.805f, 0.8f, 0.8f); 
+                Vector3 scale = new Vector3(0.8025f, 0.8025f, 0.8025f); 
                 GameObject instantiatedTrack = Instantiate(track, position, rotation);
                 instantiatedTrack.transform.localScale = scale;
             }
