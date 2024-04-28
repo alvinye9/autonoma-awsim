@@ -25,6 +25,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject vehiclePrefab;
     public GameObject npcVehiclePrefab;
+    public GameObject npc2VehiclePrefab;
     public Material[] materials;
     public RaceControlMenuController raceControlMenu;
     private TrackParams trackParams;
@@ -54,13 +55,24 @@ public class SpawnManager : MonoBehaviour
 
         SpawnEnvironment();
 
-        for (int i = 0; i < GameManager.Instance.Settings.myScenarioObj.NumCars; i++)
-        {   
-            SpawnVehicle(i);
+        // for (int i = 0; i < GameManager.Instance.Settings.myScenarioObj.NumCars; i++)
+        // {   
+        //     SpawnVehicle(i);
+        // }
+
+        SpawnVehicle(0); //only spawn one ego vehicle
+
+        if(GameManager.Instance.Settings.myScenarioObj.NumCars == 2) //spawn first NPC vehicle
+        {
+            SpawnNPCVehicle(1); 
         }
 
-        SpawnNPCVehicle(1);
-    
+        if(GameManager.Instance.Settings.myScenarioObj.NumCars == 3) //spawn first and second NPC vehicle
+        {
+            SpawnNPCVehicle(1);
+            SpawnNPC2Vehicle(2); 
+        }      
+        
     }
 
     private void OnDestroy()
@@ -73,7 +85,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnVehicle(int idx)
     {
-        Debug.Log("Spawning Vehicle: "+idx);
+        Debug.Log("Spawning Vehicle: " + idx);
         //Object, Position, Rotation
         GameObject vehicleInstance = Instantiate(vehiclePrefab, 
             trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
@@ -121,7 +133,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnNPCVehicle(int idx)
     {
-        Debug.Log("Spawning Vehicle: "+idx);
+        Debug.Log("Spawning NPC Vehicle: "+idx);
         //Object, Position, Rotation
         GameObject vehicleInstance = Instantiate(npcVehiclePrefab, 
             trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
@@ -136,8 +148,52 @@ public class SpawnManager : MonoBehaviour
 
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
 
-       
-    
+        for(int i = 0; i < vehicleCameras.Length; i++) 
+        {
+            globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
+        }
+
+        // Handle the enabling/disabling of Publishers based on ControlType
+        bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
+        var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
+        foreach (var pub in vehiclePublishers)
+        {
+            //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
+        }
+
+        // Handle the enabling/disabling of Inputs based on ControlType
+        Autonoma.VehicleInputSubscriber[] vehicleSubscribers = vehicleInstance.GetComponentsInChildren<Autonoma.VehicleInputSubscriber>();
+        KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
+        foreach (KeyboardInputs ki in keyboardInputs)
+        {
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
+        }
+        foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
+        {
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
+        }
+
+    }
+    public void SpawnNPC2Vehicle(int idx)
+    {
+        Debug.Log("Spawning NPC Vehicle: "+idx);
+        //Object, Position, Rotation
+        GameObject vehicleInstance = Instantiate(npc2VehiclePrefab, 
+            trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
+            transform.rotation);
+        vehicleInstance.transform.Rotate(trackParams.carRotation);
+
+        raceControlMenu.rosCars.Add(vehicleInstance);
+
+        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
+        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
+        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+
+        GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
+
         for(int i = 0; i < vehicleCameras.Length; i++) 
         {
             globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
