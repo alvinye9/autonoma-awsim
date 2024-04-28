@@ -24,6 +24,7 @@ public class SpawnManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject vehiclePrefab;
+    public GameObject npcVehiclePrefab;
     public Material[] materials;
     public RaceControlMenuController raceControlMenu;
     private TrackParams trackParams;
@@ -40,25 +41,13 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         trackParams = GameManager.Instance.Settings.myTrackParams; //default track params are from the map's respective .asset file
-
-        // trackParams.LAT_ORIGIN = 45.618974079378670; //will not change spawn beahvior, only what the gnsssimulator publishes    
-        // trackParams.LON_ORIGIN = 9.281181751068655; //MONZA_default
-        // trackParams.carRotation = new Vector3(0f, 45f, 0f); //this will change both the gnss sensors and the way the car spawns in the sim (+y is +azimuth +NED_yaw)
         Debug.Log("Track Name: " + trackParams.TrackName);
         Debug.Log("LAT_ORIGIN: " + trackParams.LAT_ORIGIN);
         Debug.Log("LON_ORIGIN: " + trackParams.LON_ORIGIN);
         Debug.Log("HEIGHT_ORIGIN: " + trackParams.HEIGHT_ORIGIN);  
-        Debug.Log("carRotation: " + trackParams.carRotation); 
+        // Debug.Log("carRotation: " + trackParams.carRotation); 
 
         trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1); //remove all but the first spawn position
-
-        // // Change the spawn position of the first vehicle relative to origin, default is (0.0, -6.0, 0.0) //likely wont need to change this, (+y is UP)
-        // ChangeSpawnPosition(new Vector3(-450f, -6f, 0f), 0); //LVMS spawn
-        // Debug.Log("Printing Car Spawn Positions After Modifications:");
-        // foreach (var position in trackParams.carSpawnPositions)
-        // {
-        //     Debug.Log(position.ToString());
-        // }
 
 
         trackParams.populateStartPositions();
@@ -69,22 +58,9 @@ public class SpawnManager : MonoBehaviour
         {   
             SpawnVehicle(i);
         }
-    
-        // Call the function to spawn a second vehicle in a different ROS domain ID //debuggin...
-        // SpawnVehicleInROSDomain(2, 1234); // Replace 1234 with the desired ROS domain ID
-    }
 
-    // Method to change spawn position //Added
-    public void ChangeSpawnPosition(Vector3 newPosition, int spawnIndex)
-    {
-        if (trackParams != null && spawnIndex >= 0 && spawnIndex < trackParams.carSpawnPositions.Count)
-        {
-            trackParams.carSpawnPositions[spawnIndex] = newPosition;
-        }
-        else
-        {
-            Debug.LogWarning("Invalid spawn position index or TrackParams reference is null.");
-        }
+        SpawnNPCVehicle(1);
+    
     }
 
     private void OnDestroy()
@@ -97,6 +73,7 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnVehicle(int idx)
     {
+        Debug.Log("Spawning Vehicle: "+idx);
         //Object, Position, Rotation
         GameObject vehicleInstance = Instantiate(vehiclePrefab, 
             trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
@@ -141,15 +118,54 @@ public class SpawnManager : MonoBehaviour
             vi.gameObject.SetActive(true);
         }
     }
-    // // Function to spawn a vehicle in a specified ROS domain ID
-    // public void SpawnVehicleInROSDomain(int idx, int rosDomainID)
-    // {
-    //     // Initialize ROS with the specified domain ID
-    //     Ros.Init(rosDomainID);
 
-    //     // Call the existing SpawnVehicle method to spawn the vehicle
-    //     SpawnVehicle(idx);
-    // }
+    public void SpawnNPCVehicle(int idx)
+    {
+        Debug.Log("Spawning Vehicle: "+idx);
+        //Object, Position, Rotation
+        GameObject vehicleInstance = Instantiate(npcVehiclePrefab, 
+            trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
+            transform.rotation);
+        vehicleInstance.transform.Rotate(trackParams.carRotation);
+
+        raceControlMenu.rosCars.Add(vehicleInstance);
+
+        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
+        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
+        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+
+        GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
+
+       
+    
+        for(int i = 0; i < vehicleCameras.Length; i++) 
+        {
+            globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
+        }
+
+        // Handle the enabling/disabling of Publishers based on ControlType
+        bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
+        var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
+        foreach (var pub in vehiclePublishers)
+        {
+            //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
+        }
+
+        // Handle the enabling/disabling of Inputs based on ControlType
+        Autonoma.VehicleInputSubscriber[] vehicleSubscribers = vehicleInstance.GetComponentsInChildren<Autonoma.VehicleInputSubscriber>();
+        KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
+        foreach (KeyboardInputs ki in keyboardInputs)
+        {
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
+        }
+        foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
+        {
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
+        }
+    }
     public void SpawnEnvironment()
     {
         string path = Application.streamingAssetsPath;//"Assets/Autonoma/Environments/";
