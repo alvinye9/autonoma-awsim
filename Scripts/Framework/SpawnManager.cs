@@ -94,10 +94,6 @@ public class SpawnManager : MonoBehaviour
 
         raceControlMenu.rosCars.Add(vehicleInstance);
 
-        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
-        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
-        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
-
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
 
        
@@ -224,7 +220,7 @@ public class SpawnManager : MonoBehaviour
     }
     public void SpawnEnvironment()
     {
-        string path = Application.streamingAssetsPath;//"Assets/Autonoma/Environments/";
+        string path = Application.streamingAssetsPath;
         string bundleName;
         string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
         bool isBundleLoaded = false;
@@ -270,6 +266,29 @@ public class SpawnManager : MonoBehaviour
                 Debug.Log("Failed to load AssetBundle!");
                 return;
             }
+
+
+//             GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName);
+//             GameObject instantiatedTrack = Instantiate(track);
+
+//             // Check if the track is a LowPoly version
+//             if (trackName.Contains("-LowPoly"))
+//             {
+//                 DisableLights();
+//             }
+//         }
+//     }
+
+//     private void DisableLights()
+//     {
+//         // Disable all the light sources in the entire scene
+//         Light[] lights = FindObjectsOfType<Light>();
+//         foreach (Light light in lights)
+//         {
+//             if (light.type == LightType.Directional) // Check if it's a directional light
+//             {
+//                 light.enabled = false;
+//             }
 
             GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //trackName is read from tracklist
 
