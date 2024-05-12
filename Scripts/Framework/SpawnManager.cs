@@ -50,27 +50,23 @@ public class SpawnManager : MonoBehaviour
 
         trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1); //remove all but the first spawn position
 
-
         trackParams.populateStartPositions();
 
         SpawnEnvironment();
 
-        // for (int i = 0; i < GameManager.Instance.Settings.myScenarioObj.NumCars; i++)
-        // {   
-        //     SpawnVehicle(i);
-        // }
+        bool isPit = GameManager.Instance.Settings.myScenarioObj.IsPit;
 
-        SpawnVehicle(0); //only spawn one ego vehicle
+        SpawnVehicle(0, isPit); //only spawn one ego vehicle
 
         if(GameManager.Instance.Settings.myScenarioObj.NumCars == 2) //spawn first NPC vehicle
         {
-            SpawnNPCVehicle(1); 
+            SpawnNPCVehicle(1, isPit); 
         }
 
         if(GameManager.Instance.Settings.myScenarioObj.NumCars == 3) //spawn first and second NPC vehicle
         {
-            SpawnNPCVehicle(1);
-            SpawnNPC2Vehicle(2); 
+            SpawnNPCVehicle(1, isPit);
+            SpawnNPC2Vehicle(2, isPit); 
         }      
         
     }
@@ -83,13 +79,35 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnVehicle(int idx)
+    public void SpawnVehicle(int idx, bool isPit)
     {
-        Debug.Log("Spawning Vehicle: " + idx);
-        //Object, Position, Rotation
+        // Debug.Log("Spawning Ego Vehicle: " + idx);
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
+
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
+        }
+        else{
+            Debug.Log("NOT INSIDE PITLANE");        
+        }
+
         GameObject vehicleInstance = Instantiate(vehiclePrefab, 
-            trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
+            spawnPosition,
             transform.rotation);
+
         vehicleInstance.transform.Rotate(trackParams.carRotation);
 
         raceControlMenu.rosCars.Add(vehicleInstance);
@@ -100,8 +118,6 @@ public class SpawnManager : MonoBehaviour
 
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
 
-       
-    
         for(int i = 0; i < vehicleCameras.Length; i++) 
         {
             globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
@@ -112,7 +128,8 @@ public class SpawnManager : MonoBehaviour
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
-            //pub.ToggleActive(isROS);
+        //    Debug.Log("Activating Ego-Vehicle Publishers");
+           //pub.ToggleActive(isROS);
             pub.ToggleActive(true);
         }
 
@@ -131,13 +148,33 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnNPCVehicle(int idx)
+    public void SpawnNPCVehicle(int idx, bool isPit)
     {
-        Debug.Log("Spawning NPC Vehicle: "+idx);
-        //Object, Position, Rotation
+        // Debug.Log("Spawning First NPC Vehicle: "+idx);
+
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
+
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){ 
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
+        }
+
         GameObject vehicleInstance = Instantiate(npcVehiclePrefab, 
-            trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
+            spawnPosition,
             transform.rotation);
+
         vehicleInstance.transform.Rotate(trackParams.carRotation);
 
         raceControlMenu.rosCars.Add(vehicleInstance);
@@ -158,6 +195,7 @@ public class SpawnManager : MonoBehaviour
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
+            // Debug.Log("Activating NPC-Vehicle Publishers");
             //pub.ToggleActive(isROS);
             pub.ToggleActive(true);
         }
@@ -177,14 +215,31 @@ public class SpawnManager : MonoBehaviour
         }
 
     }
-    public void SpawnNPC2Vehicle(int idx)
+    public void SpawnNPC2Vehicle(int idx, bool isPit)
     {
-        Debug.Log("Spawning NPC Vehicle: "+idx);
-        //Object, Position, Rotation
+        Debug.Log("Spawning Second NPC Vehicle: "+idx);
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
+
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){ 
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
+        }
+
         GameObject vehicleInstance = Instantiate(npc2VehiclePrefab, 
-            trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
+            spawnPosition,
             transform.rotation);
-        vehicleInstance.transform.Rotate(trackParams.carRotation);
 
         raceControlMenu.rosCars.Add(vehicleInstance);
 
@@ -204,6 +259,7 @@ public class SpawnManager : MonoBehaviour
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
+            Debug.Log("Activating NPC2-Vehicle Publishers");
             //pub.ToggleActive(isROS);
             pub.ToggleActive(true);
         }

@@ -48,6 +48,7 @@ public class ScenarioMenuController : MonoBehaviour
     public TMP_Dropdown trackDropdown; 
     
     public Toggle hotStartToggle;
+    public Toggle pitToggle;
     public TMP_InputField scenarioNameInput;
     public Slider numCarsInput;
     public TMP_Dropdown[] controlTypeDropdowns = new TMP_Dropdown[3]; 
@@ -64,6 +65,8 @@ public class ScenarioMenuController : MonoBehaviour
 
     private float height_input;
     private float yaw_input;
+
+    private bool isPit;
 
     
     private void Awake()
@@ -307,7 +310,7 @@ public class ScenarioMenuController : MonoBehaviour
             numCarsInput.value =  1;
             trackDropdown.value = 0;
             hotStartToggle.isOn = true;
-            // hotStartToggle.isOn = false;
+            pitToggle.isOn = true;
             carSpawnPosInput[0].text = "0";
             carNumInput[0].text = "1";
             rosDomainInput[0].text = "0";
@@ -472,6 +475,7 @@ public class ScenarioMenuController : MonoBehaviour
         tmpScenarioObj.NumCars = (int)numCarsInput.value;
         tmpScenarioObj.SelectedTrack = trackDropdown.value;
         tmpScenarioObj.HotStart = hotStartToggle.isOn;
+        tmpScenarioObj.IsPit = pitToggle.isOn;
         tmpScenarioObj.Cars = new List<Car>()
         {
             new Car()
@@ -544,8 +548,6 @@ public class ScenarioMenuController : MonoBehaviour
         }
         return outField;
     }
-
-
     public void ReadLatInput(string input)
     {
         if (float.TryParse(input, out float latValue))
@@ -595,4 +597,7 @@ public class ScenarioMenuController : MonoBehaviour
             Debug.LogError("Failed to Parse value: " + input);
         }
     }
+
+
+
 }
