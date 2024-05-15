@@ -37,6 +37,8 @@ public class VehicleDataPublisher : Publisher<VehicleData>
     public CanPublisher canMiscReportPublisher;
     public CanPublisher canAccelReportPublisher;
     public CanPublisher canSteerReportPublisher;
+    public CanPublisher canSteerReportExtdPublisher;
+     public CanPublisher canSteerReportExtd2Publisher;
 
     public CanPublisher canRRTireTempPublisher;
     public CanPublisher canRLTireTempPublisher;
@@ -44,6 +46,8 @@ public class VehicleDataPublisher : Publisher<VehicleData>
     public CanPublisher canFLTireTempPublisher;
 
     public CanPublisher canBrakePressureReportPublisher;
+    public CanPublisher canBrakeReportExtdPublisher;
+    public CanPublisher canBrakeReportExtd2Publisher;
     public CanPublisher canWheelSpeedReportPublisher;
 
 
@@ -76,7 +80,11 @@ public class VehicleDataPublisher : Publisher<VehicleData>
         canMiscReportPublisher = new CanPublisher("misc_report", rosNamespace, qosSettings);
         canAccelReportPublisher = new CanPublisher("accelerator_report", rosNamespace, qosSettings);
         canSteerReportPublisher = new CanPublisher("steering_report", rosNamespace, qosSettings);
+        canSteerReportExtdPublisher = new CanPublisher("steering_report_extd", rosNamespace, qosSettings);
+        canSteerReportExtd2Publisher = new CanPublisher("steering_report_extd_2", rosNamespace, qosSettings); //steering_report_extd_2
         canBrakePressureReportPublisher = new CanPublisher("brake_pressure_report", rosNamespace, qosSettings);
+        canBrakeReportExtdPublisher = new CanPublisher("brake_report_extd", rosNamespace, qosSettings);
+        canBrakeReportExtd2Publisher = new CanPublisher("brake_report_extd_2", rosNamespace, qosSettings);
         canWheelSpeedReportPublisher = new CanPublisher("wheel_speed_report", rosNamespace, qosSettings);
 
     }
@@ -159,9 +167,27 @@ public class VehicleDataPublisher : Publisher<VehicleData>
         });
 
         canSteerReportPublisher.Publish(new List<double>{
-            canSteerReportPublisher.GetCounterNext(), // counter
-            vehSim.steering_wheel_angle
+            canSteerReportPublisher.GetCounterNext(), // counter //FIXME   
+            0.0f, // SG_ static_friction_compensation 
+            0.0f //  SG_ commanded_steering_rate
+            // vehSim.steering_wheel_angle //old
         });
+        canSteerReportExtdPublisher.Publish(new List<double>{
+            vehSim.steering_wheel_angle, // counter //FIXME   
+            vehSim.steering_wheel_angle, // should be second sensor 
+            vehSim.steering_wheel_angle //  average of first two
+        }); 
+
+        canSteerReportExtd2Publisher.Publish(new List<double>{ //FIXME
+            0.0f,
+            0.0f,
+            3.0f,
+            4.0f,
+            5.0f,
+            6.0f,
+            7.0f
+        }); 
+
 
         //Debug.Log($"publishing steer angle {vehSim.steering_wheel_angle}");
 
@@ -170,6 +196,19 @@ public class VehicleDataPublisher : Publisher<VehicleData>
             vehSim.rear_brake_pressure,
             vehSim.front_brake_pressure
         });
+
+        canBrakeReportExtdPublisher.Publish(new List<double>{ //FIXME
+            0.0f,
+            0.0f,
+            0.0f,
+            0.0f
+        });
+
+        canBrakeReportExtd2Publisher.Publish(new List<double>{ //FIXME
+            0.0f,
+            0.0f
+        });
+
 
         canWheelSpeedReportPublisher.Publish(new List<double>{
             vehSim.ws_rear_left,

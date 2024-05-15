@@ -144,12 +144,12 @@ public class CanParser
 			result = (uint)tmp;
 		}
 
-        //Debug.Log($" result {result}", null);
+        // Debug.Log($" result {result}", null);
 
 		sbyte word_size = 8;
 		sbyte start_bit = (sbyte)signal.start_bit_index;
 
-        //Debug.Log($" start bit {start_bit}, dlc {signal.dlc}, sig start {signal.start_bit_index}", null);
+        // Debug.Log($" start bit {start_bit}, dlc {signal.dlc}, sig start {signal.start_bit_index}", null);
 
 		if(signal.is_little_endian)
 		{
