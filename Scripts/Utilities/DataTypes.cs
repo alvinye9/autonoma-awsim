@@ -23,6 +23,7 @@ public class ScenarioObj
     public int NumCars;
     public int SelectedTrack;
     public bool HotStart;
+    public bool IsPit;
     public List<Car> Cars;
     public ScenarioObj()
     {   

@@ -33,7 +33,7 @@ public class SteeringWheelController : MonoBehaviour
     {
         // Update wheel angle
         transform.localRotation = Quaternion.Euler(0f, -180f, 
-        -carController.steerAngleApplied*carController.vehicleParams.steeringRatio);   
+        -carController.steerAngleApplied*carController.vehicleParams.steeringRatio);
 
         // Update the gear and speed text
         gearText.text = hud.gearText.text;

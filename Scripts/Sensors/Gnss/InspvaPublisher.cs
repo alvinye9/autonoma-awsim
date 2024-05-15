@@ -54,7 +54,7 @@ public class InspvaPublisher : Publisher<INSPVA>
         msg.Up_velocity = gnssSim.vU;
         msg.Roll = imuSim.imuAngle[0]; //deg
         msg.Pitch = imuSim.imuAngle[1];
-        msg.Azimuth = -imuSim.imuAngle[2];
+        msg.Azimuth = -imuSim.imuAngle[2]; //FIXME, degrees?
     }
 } // end of class
 } // end of autonoma namespace

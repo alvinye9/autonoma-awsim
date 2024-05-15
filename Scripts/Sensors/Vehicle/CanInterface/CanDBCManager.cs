@@ -12,7 +12,7 @@ namespace Autonoma
 
 public class CanDBCManager
 {
-    public static String dbcPath = "CAN1-INDY-V14.dbc";
+    public static String dbcPath = "CAN1-INDY-V17.dbc";
 
     private String file_contents;
     public List<CanMessageDef> message_defs = new List<CanMessageDef>();

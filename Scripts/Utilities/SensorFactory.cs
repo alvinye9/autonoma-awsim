@@ -21,7 +21,7 @@ public static class SensorFactory
     {
         var sensor = new Sensor<GnssInsSensorOptions>(SensorType.GNSS_INS)
         {
-            IsActive = false,
+            IsActive = false, 
             SensorLink = "",
             TopicNamespace = "",
             Translation = new Vector3(),
@@ -34,7 +34,7 @@ public static class SensorFactory
     {
         var sensor = new Sensor<LidarSensorOptions>(SensorType.LIDAR)
         {
-            IsActive = false,
+            IsActive = false, 
             SensorLink = "",
             TopicNamespace = "",
             Translation = new Vector3(),

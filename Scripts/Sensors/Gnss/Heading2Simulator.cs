@@ -34,11 +34,19 @@ public class Heading2Simulator : MonoBehaviour
         {
             imuAngle[i] = imuAngle[i] > 180f ? imuAngle[i] - 360f : imuAngle[i];
         }
-        imuAngle = HelperFunctions.unity2vehDynCoord(-imuAngle);
-        float relativeAngle = Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI;
+        imuAngle = HelperFunctions.unity2vehDynCoord(-imuAngle); //default
+
+
+        float relativeAngle = Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI; //default
+        // float relativeAngle = 90.0F + Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI; //added
         // CW +, [deg], NORTH = 90 (-EAST = 0). 0-360
-        heading2 = HelperFunctions.MathMod((180f - imuAngle.z + relativeAngle ),360f);
+        heading2 = HelperFunctions.MathMod((180f - imuAngle.z + relativeAngle ),360f); 
+        
+        
+
 
     }
+
+
 }
 

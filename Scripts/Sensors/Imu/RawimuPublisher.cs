@@ -16,20 +16,27 @@ out of or in connection with the software or the use of the software.
 using UnityEngine;
 using novatel_oem7_msgs.msg;
 
+// using System.Collections;
+// using System.Collections.Generic;
+// using ROS2;
+
 namespace Autonoma
 {
 public class RawimuPublisher : Publisher<RAWIMU>
 {
+    
     public string modifiedRosNamespace = "/novatel_bottom";
     public string modifiedTopicName = "/rawimu";
     public float modifiedFrequency = 125f;
     public string modifiedFrameId = "";
+    
     public void getPublisherParams()
     {
         // get things from sensor assigned by ui to the sensor
     }
     protected override void Start()
     {
+        Debug.Log("Starting rawimupublisher");
         getPublisherParams();
         this.rosNamespace = modifiedRosNamespace;
         this.topicName = modifiedTopicName;
@@ -55,5 +62,7 @@ public class RawimuPublisher : Publisher<RAWIMU>
         msg.Angular_velocity.Y = imuSim.imuGyro.y;
         msg.Angular_velocity.Z = imuSim.imuGyro.z;
     }
+
+    
 } // end of class
 } // end of autonoma namespace

@@ -33,7 +33,7 @@ public class HelperFunctions
         return p0 + (p1-p0)*Mathf.Clamp(ratio,0.0f,1.0f);
     }
 
-    public static Vector3 unity2vehDynCoord(Vector3 unityCoord)
+    public static Vector3 unity2vehDynCoord(Vector3 unityCoord) 
     {   // transformation from LHS unity coordinate system to RHS vehicle dynamics coordinate system(x front, y left, z up of the vehicle)
 
         Vector3 rhsCoord = new Vector3(unityCoord[0],unityCoord[2],unityCoord[1]);
@@ -185,6 +185,24 @@ public class HelperFunctions
         }
         // Call the function recursively with the parent transform
         return currentTransform;
+    }
+
+
+
+    public static Vector3 NEDToENU(Vector3 nedEulerAngles)
+    {
+        // Convert Euler angles from degrees to radians for calculations
+        float yawNED = nedEulerAngles.z; // ψ in NED
+        float pitchNED = nedEulerAngles.x; // θ in NED
+        float rollNED = nedEulerAngles.y; // φ in NED
+ 
+        // Convert NED to ENU Euler angles
+        float yawENU = -yawNED - 90; // ψ' in ENU: Yaw angle needs to be inverted
+        float pitchENU = rollNED; // θ' in ENU: Roll in NED becomes Pitch in ENU
+        float rollENU = pitchNED; // φ' in ENU: Pitch in NED becomes Roll in ENU
+ 
+        // Return the ENU Euler angles as a new Vector3, converting back to degrees if necessary
+        return new Vector3(pitchENU, rollENU, yawENU);
     }
 }
 }

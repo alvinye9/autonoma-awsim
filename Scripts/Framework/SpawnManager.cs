@@ -18,18 +18,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using ROS2;
 
 public class SpawnManager : MonoBehaviour 
 {
     [SerializeField]
     private GameObject vehiclePrefab;
-    [SerializeField]
-    private GameObject vehiclePrefabLowPoly;
+    public GameObject npcVehiclePrefab;
+    public GameObject npc2VehiclePrefab;
     public Material[] materials;
     public RaceControlMenuController raceControlMenu;
     private TrackParams trackParams;
     public GlobalCameraManager globalCameraManager;
     private AssetBundle myLoadedAssetBundle = null;
+
+
 
     private void Awake()
     {
@@ -38,16 +41,34 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        trackParams = GameManager.Instance.Settings.myTrackParams;
-        trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1);
+        trackParams = GameManager.Instance.Settings.myTrackParams; //default track params are from the map's respective .asset file
+        Debug.Log("Track Name: " + trackParams.TrackName);
+        Debug.Log("LAT_ORIGIN: " + trackParams.LAT_ORIGIN);
+        Debug.Log("LON_ORIGIN: " + trackParams.LON_ORIGIN);
+        Debug.Log("HEIGHT_ORIGIN: " + trackParams.HEIGHT_ORIGIN);  
+        // Debug.Log("carRotation: " + trackParams.carRotation); 
+
+        trackParams.carSpawnPositions.RemoveRange(1, trackParams.carSpawnPositions.Count - 1); //remove all but the first spawn position
+
         trackParams.populateStartPositions();
 
         SpawnEnvironment();
 
-        for (int i = 0; i < GameManager.Instance.Settings.myScenarioObj.NumCars; i++)
-        {   
-            SpawnVehicle(i);
+        bool isPit = GameManager.Instance.Settings.myScenarioObj.IsPit;
+
+        SpawnVehicle(0, isPit); //only spawn one ego vehicle
+
+        if(GameManager.Instance.Settings.myScenarioObj.NumCars == 2) //spawn first NPC vehicle
+        {
+            SpawnNPCVehicle(1, isPit); 
         }
+
+        if(GameManager.Instance.Settings.myScenarioObj.NumCars == 3) //spawn first and second NPC vehicle
+        {
+            SpawnNPCVehicle(1, isPit);
+            SpawnNPC2Vehicle(2, isPit); 
+        }      
+        
     }
 
     private void OnDestroy()
@@ -58,32 +79,41 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnVehicle(int idx)
+    public void SpawnVehicle(int idx, bool isPit)
     {
-        GameObject vehicleInstance;
-        if (GameManager.Instance.Settings.myTrackParams.TrackName == "Monza-LowPoly")
-        {
-            vehicleInstance = Instantiate(vehiclePrefabLowPoly, 
-                trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
-                transform.rotation);
-        }
-        else
-        {
-            vehicleInstance = Instantiate(vehiclePrefab, 
-                trackParams.carSpawnPositions[GameManager.Instance.Settings.myScenarioObj.Cars[idx].SpawnPositionIdx],
-                transform.rotation);
+        // Debug.Log("Spawning Ego Vehicle: " + idx);
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
-            Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
-            mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
-            vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
         }
+        else{
+            Debug.Log("NOT INSIDE PITLANE");        
+        }
+
+        GameObject vehicleInstance = Instantiate(vehiclePrefab, 
+            spawnPosition,
+            transform.rotation);
 
         vehicleInstance.transform.Rotate(trackParams.carRotation);
 
         raceControlMenu.rosCars.Add(vehicleInstance);
 
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
-    
+
         for(int i = 0; i < vehicleCameras.Length; i++) 
         {
             globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
@@ -94,7 +124,9 @@ public class SpawnManager : MonoBehaviour
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
-            pub.ToggleActive(isROS);
+        //    Debug.Log("Activating Ego-Vehicle Publishers");
+           //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
         }
 
         // Handle the enabling/disabling of Inputs based on ControlType
@@ -102,14 +134,146 @@ public class SpawnManager : MonoBehaviour
         KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
         foreach (KeyboardInputs ki in keyboardInputs)
         {
-            ki.gameObject.SetActive(!isROS);
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
         }
         foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
         {
-            vi.gameObject.SetActive(isROS);
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
         }
     }
 
+    public void SpawnNPCVehicle(int idx, bool isPit)
+    {
+        // Debug.Log("Spawning First NPC Vehicle: "+idx);
+
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
+
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){ 
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
+        }
+
+        GameObject vehicleInstance = Instantiate(npcVehiclePrefab, 
+            spawnPosition,
+            transform.rotation);
+
+        vehicleInstance.transform.Rotate(trackParams.carRotation);
+
+        raceControlMenu.rosCars.Add(vehicleInstance);
+
+        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
+        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
+        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+
+        GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
+
+        for(int i = 0; i < vehicleCameras.Length; i++) 
+        {
+            globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
+        }
+
+        // Handle the enabling/disabling of Publishers based on ControlType
+        bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
+        var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
+        foreach (var pub in vehiclePublishers)
+        {
+            // Debug.Log("Activating NPC-Vehicle Publishers");
+            //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
+        }
+
+        // Handle the enabling/disabling of Inputs based on ControlType
+        Autonoma.VehicleInputSubscriber[] vehicleSubscribers = vehicleInstance.GetComponentsInChildren<Autonoma.VehicleInputSubscriber>();
+        KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
+        foreach (KeyboardInputs ki in keyboardInputs)
+        {
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
+        }
+        foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
+        {
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
+        }
+
+    }
+    public void SpawnNPC2Vehicle(int idx, bool isPit)
+    {
+        Debug.Log("Spawning Second NPC Vehicle: "+idx);
+        string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
+        Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
+
+        if(isPit){ // shift spawn position to pitlane
+            Debug.Log("INSIDE PITLANE");
+            float dx = 0f;
+            float dy = 0f;
+            float dz = 0f;
+            if(trackName.Equals("LVMS.prefab")){ 
+                dx = 53.37f;
+                dy = -1.5f;
+                dz = -59.44f;
+            }  
+            float newX = spawnPosition.x + dx;
+            float newY = spawnPosition.y + dy; 
+            float newZ = spawnPosition.z + dz;
+            spawnPosition = new Vector3(newX, newY, newZ);
+        }
+
+        GameObject vehicleInstance = Instantiate(npc2VehiclePrefab, 
+            spawnPosition,
+            transform.rotation);
+
+        raceControlMenu.rosCars.Add(vehicleInstance);
+
+        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
+        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
+        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+
+        GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
+
+        for(int i = 0; i < vehicleCameras.Length; i++) 
+        {
+            globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
+        }
+
+        // Handle the enabling/disabling of Publishers based on ControlType
+        bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
+        var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
+        foreach (var pub in vehiclePublishers)
+        {
+            Debug.Log("Activating NPC2-Vehicle Publishers");
+            //pub.ToggleActive(isROS);
+            pub.ToggleActive(true);
+        }
+
+        // Handle the enabling/disabling of Inputs based on ControlType
+        Autonoma.VehicleInputSubscriber[] vehicleSubscribers = vehicleInstance.GetComponentsInChildren<Autonoma.VehicleInputSubscriber>();
+        KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
+        foreach (KeyboardInputs ki in keyboardInputs)
+        {
+            //ki.gameObject.SetActive(!isROS);
+            ki.gameObject.SetActive(true);
+        }
+        foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
+        {
+            //vi.gameObject.SetActive(isROS);
+            vi.gameObject.SetActive(true);
+        }
+    }
     public void SpawnEnvironment()
     {
         string path = Application.streamingAssetsPath;
@@ -159,27 +323,28 @@ public class SpawnManager : MonoBehaviour
                 return;
             }
 
-            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName);
-            GameObject instantiatedTrack = Instantiate(track);
+            GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //trackName is read from tracklist
 
-            // Check if the track is a LowPoly version
-            if (trackName.Contains("-LowPoly"))
+            
+            if(trackName.Equals("LVMS.prefab"))
             {
-                DisableLights();
+                Debug.Log("INSTANTIATING LVMS TRACK");
+                // Specify the position, rotation, and scale for the new track instance
+                // Vector3 position = new Vector3(262f, 9f, 368f); //(Car Rotation 107 deg) (based on the PAIR vegas2.csv raceline)
+                Vector3 position = new Vector3(205f, 8.75f, -257f);  //(Car Rotation 230 deg NED) to start at starting line
+                Quaternion rotation = Quaternion.Euler(0, 180f, 0);  
+                Vector3 scale = new Vector3(0.8025f, 0.8025f, 0.8025f); 
+                GameObject instantiatedTrack = Instantiate(track, position, rotation);
+                instantiatedTrack.transform.localScale = scale;
             }
+            else
+            {
+                Debug.Log("INSTANTIATING TRACK: "+ trackName);
+                Instantiate(track);
+            }
+            
+
         }
     }
 
-    private void DisableLights()
-    {
-        // Disable all the light sources in the entire scene
-        Light[] lights = FindObjectsOfType<Light>();
-        foreach (Light light in lights)
-        {
-            if (light.type == LightType.Directional) // Check if it's a directional light
-            {
-                light.enabled = false;
-            }
-        }
-    }
 }

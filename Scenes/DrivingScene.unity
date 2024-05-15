@@ -187,6 +187,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a68c43fe1f2a47cfa234b5eeaa98012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 11
+  m_ObsoleteShadowResolutionTier: 1
+  m_ObsoleteUseShadowQualitySettings: 0
+  m_ObsoleteCustomShadowResolution: 512
+  m_ObsoleteContactShadows: 0
+  m_PointlightHDType: 0
+  m_SpotLightShape: 0
+  m_AreaLightShape: 0
   m_Intensity: 5000
   m_EnableSpotReflector: 1
   m_LuxAtDistance: 1
@@ -290,14 +298,6 @@ MonoBehaviour:
   m_AreaLightEmissiveMeshShadowCastingMode: 0
   m_AreaLightEmissiveMeshMotionVectorGenerationMode: 0
   m_AreaLightEmissiveMeshLayer: -1
-  m_Version: 11
-  m_ObsoleteShadowResolutionTier: 1
-  m_ObsoleteUseShadowQualitySettings: 0
-  m_ObsoleteCustomShadowResolution: 512
-  m_ObsoleteContactShadows: 0
-  m_PointlightHDType: 0
-  m_SpotLightShape: 0
-  m_AreaLightShape: 0
 --- !u!108 &975176196
 Light:
   m_ObjectHideFlags: 0
@@ -404,7 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vehiclePrefab: {fileID: 4673780222355969112, guid: 3336f833e9bcf440b83d43c89da08bf0, type: 3}
-  vehiclePrefabLowPoly: {fileID: 1093341664584056869, guid: 6824caacdfb034f1fa4034ba5e523c2e, type: 3}
+  npcVehiclePrefab: {fileID: 4969617595524111395, guid: dd1885b81b19a6fc5aad74312b417993, type: 3}
+  npc2VehiclePrefab: {fileID: 5683614796508676486, guid: 3e4748acbb00be7e08a34b692324ed42, type: 3}
   materials:
   - {fileID: 2100000, guid: 9880c9adf0e013c42bbc176e05cd544e, type: 2}
   - {fileID: 2100000, guid: 6de6ffd28aef1724a94edfe55836b35f, type: 2}
@@ -648,6 +649,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 257695393}
     m_Modifications:
+    - target: {fileID: 456831392272639914, guid: 5863afccd2e1041b0a52a78ecfdd7b9f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 782ecbe9163901912a97b8f862f98570, type: 3}
     - target: {fileID: 456831392671175715, guid: 5863afccd2e1041b0a52a78ecfdd7b9f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -892,6 +897,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DriveMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 3155691503542929826, guid: 4e472102fcd614a7583d98ca842634da, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 782ecbe9163901912a97b8f862f98570, type: 3}
     - target: {fileID: 7623800211430632172, guid: 4e472102fcd614a7583d98ca842634da, type: 3}
       propertyPath: trackFlagDropdown
       value: 

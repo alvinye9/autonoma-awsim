@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 790
   centerOfMass: {x: 0, y: 0.2, z: 0}
-  Inertia: {x: 550, y: 800, z: 265}
+  Inertia: {x: 265, y: 550, z: 800}
   lf: 1.7
   lr: -1.3
-  twf: 0.838
+  twf: 0.838 
   twr: 0.79
   w1pos: {x: -0.838, y: 0.626, z: 1.7}
   w2pos: {x: 0.838, y: 0.626, z: 1.7}
