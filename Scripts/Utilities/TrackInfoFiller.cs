@@ -47,7 +47,7 @@ public class TrackInfoFiller : MonoBehaviour
             Debug.Log("Track Info Cleared");
             clear = false;
         }
-        if (record &&  Vector3.Distance(transform.position , prevPos) >=5f)
+        if (record &&  Vector3.Distance(transform.position , prevPos) >=2.5f)
         {
             trackParams.trackInfo.innerX.Add(transform.position.x);
             trackParams.trackInfo.innerZ.Add(transform.position.z);

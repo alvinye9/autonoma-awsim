@@ -88,8 +88,15 @@ public class HUDManager : MonoBehaviour
         wheelText.text =  ((int)(carController.steerAngleApplied*carController.vehicleParams.steeringRatio)).ToString();
 
         gearText.text = carController.gear.ToString();
-        brakeBar.fillAmount = carController.brakeCmd/carController.vehicleParams.maxBrakeKpa;
-        throttleBar.fillAmount = carController.throttleCmd;
+        // brakeBar.fillAmount = carController.brakeCmd/carController.vehicleParams.maxBrakeKpa;
+        // throttleBar.fillAmount = carController.throttleCmd;
+        brakeBar.fillAmount = carController.brakeApplied;
+        throttleBar.fillAmount = carController.thrApplied;
+        
+        // Debug.Log("Throttle Applied: " + carController.thrApplied); //not printing 0 but is this the same as throttle cmd?
+        // Debug.Log("Throttle Cmd: "+ carController.throttleCmd); //printing 0 
+        // Debug.Log("Throttle Bar Filling: "+ throttleBar.fillAmount ); //printing 0
+
         tachBar.fillAmount = hudRpm/7500;
         if (hudRpm > 6500 && hudRpm < 7000)
         {
