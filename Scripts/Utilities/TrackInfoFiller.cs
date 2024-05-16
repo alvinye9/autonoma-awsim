@@ -55,7 +55,7 @@ public class TrackInfoFiller : MonoBehaviour
             trackParams.trackInfo.innerY.Add(transform.position.y);
             trackParams.trackInfo.heading.Add(transform.eulerAngles.y);
             prevPos = transform.position;
-            EditorUtility.SetDirty(trackParams.trackInfo);
+            // EditorUtility.SetDirty(trackParams.trackInfo);
         }        
     }
 }
