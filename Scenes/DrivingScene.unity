@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c62a83068a74d86ba91ec4d730984f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehiclePrefab: {fileID: 4673780222355969112, guid: 3336f833e9bcf440b83d43c89da08bf0, type: 3}
+  vehiclePrefab: {fileID: 7209270688275563199, guid: 014b6bc1310046d5a84df9f497308ac3, type: 3}
   npcVehiclePrefab: {fileID: 4969617595524111395, guid: dd1885b81b19a6fc5aad74312b417993, type: 3}
   npc2VehiclePrefab: {fileID: 5683614796508676486, guid: 3e4748acbb00be7e08a34b692324ed42, type: 3}
   materials:

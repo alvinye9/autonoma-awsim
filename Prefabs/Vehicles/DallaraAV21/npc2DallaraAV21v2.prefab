@@ -680,6 +680,7 @@ MonoBehaviour:
   vE: 0
   vN: 0
   vU: 0
+  trackParams: {fileID: 0}
 --- !u!1 &1074569707317195331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,7 +1542,7 @@ MonoBehaviour:
     HistoryPolicy: 1
     Depth: 10
   modifiedRosNamespace: 
-  modifiedTopicName: /npc_race_control
+  modifiedTopicName: /npc2_race_control
   modifiedFrequency: 10
   modifiedFrameId: 
   raceControlData: {fileID: 2416167119484331529}
@@ -3766,6 +3767,7 @@ MonoBehaviour:
   vE: 0
   vN: 0
   vU: 0
+  trackParams: {fileID: 0}
 --- !u!1 &7223217305158198186
 GameObject:
   m_ObjectHideFlags: 0
@@ -4943,6 +4945,7 @@ MonoBehaviour:
   vE: 0
   vN: 0
   vU: 0
+  trackParams: {fileID: 0}
 --- !u!1 &9120144024349030623
 GameObject:
   m_ObjectHideFlags: 0
