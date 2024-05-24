@@ -75,10 +75,10 @@ public class LapTimer : MonoBehaviour
                     //Debug.Log($"adjusted lap time by {adjustment}s");
                 }
 
-                if ( currLaptime > 90f )
+                if ( currLaptime > 5f )
                 {
                     laptimes.Add(currLaptime);
-                    // onLapCompleted(currLaptime); //FIXME
+                    onLapCompleted(currLaptime); //FIXME, might cause issues..
                 }
             }
           

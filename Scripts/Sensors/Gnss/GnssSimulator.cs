@@ -29,6 +29,7 @@ public class GnssSimulator : MonoBehaviour
     public double lat,lon,height;
     public double lat0,lon0,h0;    
     public float vE, vN, vU;
+    public TrackParams trackParams;
     void Start() 
     {
         rb = HelperFunctions.GetParentComponent<Rigidbody>(transform);
@@ -41,6 +42,13 @@ public class GnssSimulator : MonoBehaviour
         catch 
         {
             Debug.Log("lat0 lon0 not defined!");
+            
+            if(trackParams != null)
+            {
+                lat0 = trackParams.LAT_ORIGIN;
+                lon0 = trackParams.LAT_ORIGIN;
+                h0 = trackParams.HEIGHT_ORIGIN;
+            }
         }
 
     } 

@@ -48,14 +48,14 @@ public class TrackInfoFiller : MonoBehaviour
             Debug.Log("Track Info Cleared");
             clear = false;
         }
-        if (record &&  Vector3.Distance(transform.position , prevPos) >=5f)
+        if (record &&  Vector3.Distance(transform.position , prevPos) >=2.5f)
         {
             trackParams.trackInfo.innerX.Add(transform.position.x);
             trackParams.trackInfo.innerZ.Add(transform.position.z);
             trackParams.trackInfo.innerY.Add(transform.position.y);
             trackParams.trackInfo.heading.Add(transform.eulerAngles.y);
             prevPos = transform.position;
-            EditorUtility.SetDirty(trackParams.trackInfo);
+            // EditorUtility.SetDirty(trackParams.trackInfo);
         }        
     }
 }

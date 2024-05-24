@@ -166,28 +166,26 @@ public class VehicleDataPublisher : Publisher<VehicleData>
             vehSim.accel_pedal_output
         });
 
-        canSteerReportPublisher.Publish(new List<double>{
-            canSteerReportPublisher.GetCounterNext(), // counter //FIXME   
-            0.0f, // SG_ static_friction_compensation 
-            0.0f //  SG_ commanded_steering_rate
-            // vehSim.steering_wheel_angle //old
+        canSteerReportPublisher.Publish(new List<double>{ //FIXME 
+            canSteerReportPublisher.GetCounterNext(), // counter   
+            0.0f, //  static_friction_compensation 
+            0.0f //   commanded_steering_rate
         });
-        canSteerReportExtdPublisher.Publish(new List<double>{
-            vehSim.steering_wheel_angle, // counter //FIXME   
+        canSteerReportExtdPublisher.Publish(new List<double>{ //FIXME 
+            vehSim.steering_wheel_angle,   
             vehSim.steering_wheel_angle, // should be second sensor 
             vehSim.steering_wheel_angle //  average of first two
         }); 
 
         canSteerReportExtd2Publisher.Publish(new List<double>{ //FIXME
-            0.0f,
-            0.0f,
-            3.0f,
-            4.0f,
-            5.0f,
-            6.0f,
-            7.0f
+            0.0f, //motor_duty_cycle_cmd 
+            0.0f, //motor_duty_cycle_fbk
+            0.0f, //motor_current_fbk 
+            0.0f, //sbw_ecu_voltage
+            0.0f, //sbw_ecu_temp
+            0.0f, //sbw_error_code
+            0.0f //sbw_motor_torque_estimate
         }); 
-
 
         //Debug.Log($"publishing steer angle {vehSim.steering_wheel_angle}");
 
@@ -198,17 +196,16 @@ public class VehicleDataPublisher : Publisher<VehicleData>
         });
 
         canBrakeReportExtdPublisher.Publish(new List<double>{ //FIXME
-            0.0f,
-            0.0f,
-            0.0f,
-            0.0f
+            0.0f, //F_brk_pos_cmd
+            0.0f, //F_brk_pos_fbk 
+            0.0f, //R_brk_pos_cmd 
+            0.0f //R_brk_pos_fbk 
         });
 
         canBrakeReportExtd2Publisher.Publish(new List<double>{ //FIXME
-            0.0f,
-            0.0f
+            0.0f, //f_brake_act_force 
+            0.0f //r_brake_act_force
         });
-
 
         canWheelSpeedReportPublisher.Publish(new List<double>{
             vehSim.ws_rear_left,

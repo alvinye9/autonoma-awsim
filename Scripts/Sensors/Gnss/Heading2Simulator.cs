@@ -39,8 +39,9 @@ public class Heading2Simulator : MonoBehaviour
 
         float relativeAngle = Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI; //default
         // float relativeAngle = 90.0F + Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI; //added
-        // CW +, [deg], NORTH = 90 (-EAST = 0). 0-360
-        heading2 = HelperFunctions.MathMod((180f - imuAngle.z + relativeAngle ),360f); 
+        // CW +, [deg], NORTH = 0 (EAST = 90). 0-360 
+        heading2 = HelperFunctions.MathMod((180f - imuAngle.z + relativeAngle )  + 90.0f ,360f);
+        
         
         
 
