@@ -23,7 +23,7 @@ public class Heading2Publisher : Publisher<HEADING2>
 {
     public string modifiedRosNamespace = "/novatel_bottom";
     public string modifiedTopicName = "/heading2";
-    public float modifiedFrequency = 1f;
+    public float modifiedFrequency = 100f;
     public string modifiedFrameId = "";
     public void getPublisherParams()
     {
