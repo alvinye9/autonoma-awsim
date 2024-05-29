@@ -2698,7 +2698,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_top
   modifiedTopicName: /bestgnsspos
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 1276364910490411621}
 --- !u!114 &8684597870791914951
@@ -2720,7 +2720,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_top
   modifiedTopicName: /bestpos
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 1276364910490411621}
 --- !u!114 &3886578626397750110
@@ -2742,7 +2742,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_top
   modifiedTopicName: /bestgnssvel
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 1276364910490411621}
 --- !u!114 &4176718336286093634
@@ -2764,7 +2764,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_top
   modifiedTopicName: /bestvel
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 1276364910490411621}
 --- !u!114 &1084123397438356660
@@ -2809,7 +2809,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_top
   modifiedTopicName: /heading2
-  modifiedFrequency: 1
+  modifiedFrequency: 100
   modifiedFrameId: 
   heading2Sim: {fileID: 786613502490750100}
 --- !u!114 &8277774400906651845
@@ -4609,7 +4609,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_bottom
   modifiedTopicName: /bestgnsspos
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 937264494116879081}
 --- !u!114 &254696194050291600
@@ -4631,7 +4631,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_bottom
   modifiedTopicName: /bestpos
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 937264494116879081}
 --- !u!114 &7236457758881863906
@@ -4653,7 +4653,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_bottom
   modifiedTopicName: /bestgnssvel
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 937264494116879081}
 --- !u!114 &6900729165722419782
@@ -4675,7 +4675,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_bottom
   modifiedTopicName: /bestvel
-  modifiedFrequency: 20
+  modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 937264494116879081}
 --- !u!114 &478630140721472937
@@ -4720,7 +4720,7 @@ MonoBehaviour:
     Depth: 10
   modifiedRosNamespace: /novatel_bottom
   modifiedTopicName: /heading2
-  modifiedFrequency: 1
+  modifiedFrequency: 100
   modifiedFrameId: 
   heading2Sim: {fileID: 8200978788070277805}
 --- !u!114 &6943078774270912208

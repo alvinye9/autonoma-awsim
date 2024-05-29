@@ -43,8 +43,7 @@ public class ImuSimulator : MonoBehaviour
         // imuVelLocal = HelperFunctions.unity2enu( transform.InverseTransformDirection( rb.GetPointVelocity( transform.position ) ) );
         Vector3 dvdt = (imuVelLocal - imuVelLocalPrev)/Time.fixedDeltaTime;
         Vector3 localGravity = transform.InverseTransformDirection(Physics.gravity);
-        imuAccel = dvdt - Vector3.Cross(imuVelLocal,imuGyro) - HelperFunctions.unity2vehDynCoord(localGravity); //default
-        // imuAccel = dvdt - Vector3.Cross(imuVelLocal,imuGyro) - HelperFunctions.unity2enu(localGravity); 
+        imuAccel = dvdt - Vector3.Cross(imuVelLocal,imuGyro) - HelperFunctions.unity2vehDynCoord(localGravity); 
         imuVelLocalPrev = imuVelLocal;
 
         // euler angles; some sensors output it with their internal fusion algorithms.
@@ -55,9 +54,7 @@ public class ImuSimulator : MonoBehaviour
         }
 
         // RPY, RHS +, [deg], NORTH = 0 for yaw, EAST = -90, [-180,180]
-        imuAngle = HelperFunctions.unity2vehDynCoord(-imuAngle); //default
-        // imuAngle = HelperFunctions.unity2enu(-imuAngle);
-        // Debug.Log(imuAngle); 
+        imuAngle = HelperFunctions.unity2vehDynCoord(-imuAngle); 
 
     }
 
