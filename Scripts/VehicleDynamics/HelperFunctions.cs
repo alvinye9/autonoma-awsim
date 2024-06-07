@@ -193,8 +193,8 @@ public class HelperFunctions
     {
         // Convert Euler angles from degrees to radians for calculations
         float yawNED = nedEulerAngles.z; // ψ in NED
-        float pitchNED = nedEulerAngles.x; // θ in NED
-        float rollNED = nedEulerAngles.y; // φ in NED
+        float pitchNED = nedEulerAngles.y; // θ in NED
+        float rollNED = nedEulerAngles.x; // φ in NED
  
         // Convert NED to ENU Euler angles
         float yawENU = -yawNED - 90; // ψ' in ENU: Yaw angle needs to be inverted
@@ -202,7 +202,7 @@ public class HelperFunctions
         float rollENU = pitchNED; // φ' in ENU: Pitch in NED becomes Roll in ENU
  
         // Return the ENU Euler angles as a new Vector3, converting back to degrees if necessary
-        return new Vector3(pitchENU, rollENU, yawENU);
+        return new Vector3(rollENU, pitchENU, yawENU);
     }
 }
 }

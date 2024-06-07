@@ -14,29 +14,24 @@ whether in action of contract, tort or otherwise, arising from,
 out of or in connection with the software or the use of the software.
 */
 using UnityEngine;
-using novatel_oem7_msgs.msg;
-
-// using System.Collections;
-// using System.Collections.Generic;
-// using ROS2;
+using sensor_msgs.msg;
 
 namespace Autonoma
 {
-public class RawimuPublisher : Publisher<RAWIMU>
+public class ImuPublisher : Publisher<Imu>
 {
-    
     public string modifiedRosNamespace = "/novatel_bottom";
-    public string modifiedTopicName = "/rawimu";
-    public float modifiedFrequency = 125f;
-    public string modifiedFrameId = "";
-    
+    public string modifiedTopicName = "/imu/data";
+    public float modifiedFrequency = 100f;
+    public string modifiedFrameId = "/gps_bottom";
+    public float linear_acceleration_covariance = 0.0009f;
+    public float angular_velocity_covariance = 0.00035f;
     public void getPublisherParams()
     {
         // get things from sensor assigned by ui to the sensor
     }
     protected override void Start()
     {
-        Debug.Log("Starting rawimupublisher");
         getPublisherParams();
         this.rosNamespace = modifiedRosNamespace;
         this.topicName = modifiedTopicName;
@@ -47,23 +42,32 @@ public class RawimuPublisher : Publisher<RAWIMU>
     public ImuSimulator imuSim;
     public override void fillMsg()
     {
-        (ushort week, uint ms) weekMs = GnssSimulator.GetGPSWeekAndMS();
+        //with orientation
 
-        msg.Nov_header.Gps_week_number = weekMs.week;
-        msg.Nov_header.Gps_week_milliseconds = weekMs.ms;
+        msg.Header.Frame_id = modifiedFrameId;
 
-        // msg.Header.Frame_id = modifiedFrameId;
         msg.Linear_acceleration = new geometry_msgs.msg.Vector3();
         msg.Linear_acceleration.X = imuSim.imuAccel.x;
         msg.Linear_acceleration.Y = imuSim.imuAccel.y;
         msg.Linear_acceleration.Z = imuSim.imuAccel.z;
+        msg.Linear_acceleration_covariance[0] = linear_acceleration_covariance;
+        msg.Linear_acceleration_covariance[4] = linear_acceleration_covariance;
+        msg.Linear_acceleration_covariance[8] = linear_acceleration_covariance;
 
         msg.Angular_velocity = new geometry_msgs.msg.Vector3();
         msg.Angular_velocity.X = imuSim.imuGyro.x;
         msg.Angular_velocity.Y = imuSim.imuGyro.y;
         msg.Angular_velocity.Z = imuSim.imuGyro.z;
-    }
+        msg.Angular_velocity_covariance[0] = angular_velocity_covariance;
+        msg.Angular_velocity_covariance[4] = angular_velocity_covariance;
+        msg.Angular_velocity_covariance[8] = angular_velocity_covariance;
 
-    
-} // end of class
-} // end of autonoma namespace
+        //The Euler input is in ENU
+        UnityEngine.Quaternion quat = UnityEngine.Quaternion.Euler((float)(imuSim.imuAngle.y), (float)(imuSim.imuAngle.x), (float)(imuSim.imuAngle.z + 90.0));
+        msg.Orientation.X = quat.x;
+        msg.Orientation.Y  = quat.y;
+        msg.Orientation.Z = quat.z;
+        msg.Orientation.W = quat.w;
+    }
+}
+}

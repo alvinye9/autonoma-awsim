@@ -22,7 +22,7 @@ public class BestvelPublisher : Publisher<BESTVEL>
 {
     public string modifiedRosNamespace = "/novatel_bottom";
     public string modifiedTopicName = "/bestvel";
-    public float modifiedFrequency = 20f;
+    public float modifiedFrequency = 100f; //originally 20
     public string modifiedFrameId = "";
     public void getPublisherParams()
     {

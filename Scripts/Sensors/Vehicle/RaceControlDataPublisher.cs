@@ -15,6 +15,7 @@ out of or in connection with the software or the use of the software.
 */
 using UnityEngine;
 using autonoma_msgs.msg;
+using deep_orange_msgs.msg; 
 using System.Collections.Generic;
 
 namespace Autonoma

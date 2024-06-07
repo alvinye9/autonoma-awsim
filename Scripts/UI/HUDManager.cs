@@ -93,7 +93,7 @@ public class HUDManager : MonoBehaviour
         brakeBar.fillAmount = carController.brakeApplied/100.0f;
         throttleBar.fillAmount = carController.thrApplied;
 
-        Debug.Log("Brake Applied: " + carController.brakeApplied);
+        // Debug.Log("Brake Applied: " + carController.brakeApplied);
         // Debug.Log("Throttle Applied: " + carController.thrApplied); //not printing 0 but is this the same as throttle cmd?
         // Debug.Log("Throttle Cmd: "+ carController.throttleCmd); //printing 0 
         // Debug.Log("Throttle Bar Filling: "+ throttleBar.fillAmount ); //printing 0
