@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ public class ImuPublisher : Publisher<Imu>
     public string modifiedRosNamespace = "/novatel_bottom";
     public string modifiedTopicName = "/imu/data";
     public float modifiedFrequency = 100f;
-    public string modifiedFrameId = "/gps_bottom";
+    public string modifiedFrameId = "gps_bottom";
     public float linear_acceleration_covariance = 0.0009f;
     public float angular_velocity_covariance = 0.00035f;
     public void getPublisherParams()
