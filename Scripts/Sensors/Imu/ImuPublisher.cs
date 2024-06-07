@@ -23,7 +23,7 @@ public class ImuPublisher : Publisher<Imu>
     public string modifiedRosNamespace = "/novatel_bottom";
     public string modifiedTopicName = "/imu/data";
     public float modifiedFrequency = 100f;
-    public string modifiedFrameId = "/gps_bottom";
+    public string modifiedFrameId = "gps_bottom";
     public float linear_acceleration_covariance = 0.0009f;
     public float angular_velocity_covariance = 0.00035f;
     public void getPublisherParams()
