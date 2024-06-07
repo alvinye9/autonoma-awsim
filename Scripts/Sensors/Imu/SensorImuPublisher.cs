@@ -20,10 +20,10 @@ namespace Autonoma
 {
 public class SensorImuPublisher : Publisher<Imu>
 {
-    public string modifiedRosNamespace = "";
-    public string modifiedTopicName = "/imu";
+    public string modifiedRosNamespace = "/novatel_bottom";
+    public string modifiedTopicName = "/imu/data_raw";
     public float modifiedFrequency = 100f;
-    public string modifiedFrameId = "";
+    public string modifiedFrameId = "/gps_bottom_imu";
     public float linear_acceleration_covariance = 0.0009f;
     public float angular_velocity_covariance = 0.00035f;
     public void getPublisherParams()
@@ -42,6 +42,10 @@ public class SensorImuPublisher : Publisher<Imu>
     public ImuSimulator imuSim;
     public override void fillMsg()
     {
+        //no orientation
+        
+        msg.Header.Frame_id = modifiedFrameId;
+
         msg.Linear_acceleration = new geometry_msgs.msg.Vector3();
         msg.Linear_acceleration.X = imuSim.imuAccel.x;
         msg.Linear_acceleration.Y = imuSim.imuAccel.y;

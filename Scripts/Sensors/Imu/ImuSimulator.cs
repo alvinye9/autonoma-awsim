@@ -36,11 +36,8 @@ public class ImuSimulator : MonoBehaviour
     {   
         
         Vector3 localAngularvelocity = transform.InverseTransformDirection(rb.angularVelocity);
-        imuGyro = HelperFunctions.unity2vehDynCoord(-localAngularvelocity); //default
-        // imuGyro = HelperFunctions.unity2enu(-localAngularvelocity); 
-
-        imuVelLocal = HelperFunctions.unity2vehDynCoord( transform.InverseTransformDirection( rb.GetPointVelocity( transform.position ) ) ); //default
-        // imuVelLocal = HelperFunctions.unity2enu( transform.InverseTransformDirection( rb.GetPointVelocity( transform.position ) ) );
+        imuGyro = HelperFunctions.unity2vehDynCoord(-localAngularvelocity); 
+        imuVelLocal = HelperFunctions.unity2vehDynCoord( transform.InverseTransformDirection( rb.GetPointVelocity( transform.position ) ) ); 
         Vector3 dvdt = (imuVelLocal - imuVelLocalPrev)/Time.fixedDeltaTime;
         Vector3 localGravity = transform.InverseTransformDirection(Physics.gravity);
         imuAccel = dvdt - Vector3.Cross(imuVelLocal,imuGyro) - HelperFunctions.unity2vehDynCoord(localGravity); 
