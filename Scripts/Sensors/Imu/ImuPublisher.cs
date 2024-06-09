@@ -43,10 +43,8 @@ public class ImuPublisher : Publisher<Imu>
     public override void fillMsg()
     {
         //with orientation
-
         msg.Header.Frame_id = modifiedFrameId;
 
-        msg.Linear_acceleration = new geometry_msgs.msg.Vector3();
         msg.Linear_acceleration.X = imuSim.imuAccel.x;
         msg.Linear_acceleration.Y = imuSim.imuAccel.y;
         msg.Linear_acceleration.Z = imuSim.imuAccel.z;
@@ -54,7 +52,6 @@ public class ImuPublisher : Publisher<Imu>
         msg.Linear_acceleration_covariance[4] = linear_acceleration_covariance;
         msg.Linear_acceleration_covariance[8] = linear_acceleration_covariance;
 
-        msg.Angular_velocity = new geometry_msgs.msg.Vector3();
         msg.Angular_velocity.X = imuSim.imuGyro.x;
         msg.Angular_velocity.Y = imuSim.imuGyro.y;
         msg.Angular_velocity.Z = imuSim.imuGyro.z;

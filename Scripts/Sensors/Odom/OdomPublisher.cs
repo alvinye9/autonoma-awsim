@@ -30,6 +30,8 @@ namespace Autonoma
         public string modifiedFrameId = "utm";
         public string modifiedChildFrameId = "gps_top_ant1";
         private LatLngUTMConverter latLngUtmConverter;
+        private double latitude;
+        private double longitude;
         private double utmX;
         private double utmY;
         
@@ -55,31 +57,17 @@ namespace Autonoma
         public ImuSimulator imuSim;
         public override void fillMsg()
         {
-            // (ushort week, uint ms) weekMs = GnssSimulator.GetGPSWeekAndMS();
-
-            // msg.Nov_header.Gps_week_number = weekMs.week;
-            // msg.Nov_header.Gps_week_milliseconds = weekMs.ms;
-
             msg.Header.Frame_id = modifiedFrameId;
             msg.Child_frame_id = modifiedChildFrameId;
 
-            double latitude = gnssSim.lat;
-            double longitude = gnssSim.lon;
             // Convert latitude and longitude to UTM coordinates
+            latitude = gnssSim.lat;
+            longitude = gnssSim.lon;
             var utmResult = latLngUtmConverter.convertLatLngToUtm(latitude, longitude);
             utmX = utmResult.Easting;
             utmY = utmResult.Northing;
 
             //Position
-            msg.Pose = new PoseWithCovariance();
-            msg.Pose.Pose = new geometry_msgs.msg.Pose();
-            msg.Pose.Pose.Position = new Point();
-            // msg.Pose.Covariance = new double[36];
-            for (int i = 0; i < msg.Pose.Covariance.Length; i++)
-            {
-                msg.Pose.Covariance[i] = 0.0;
-            }
-
             msg.Pose.Pose.Position.X = utmX;
             msg.Pose.Pose.Position.Y = utmY;
             msg.Pose.Pose.Position.Z = gnssSim.height;
@@ -91,34 +79,16 @@ namespace Autonoma
             msg.Pose.Pose.Orientation.Z = quat.z;
             msg.Pose.Pose.Orientation.W = quat.w;
 
-            // Twist (velocity)
-            msg.Twist = new TwistWithCovariance();
-            msg.Twist.Twist = new Twist();
-
-            msg.Twist.Twist.Linear = new geometry_msgs.msg.Vector3();
+            // Twist
             msg.Twist.Twist.Linear.X = imuSim.imuVelLocal.x; // Forward   //change this to be using GPS twist
             msg.Twist.Twist.Linear.Y = imuSim.imuVelLocal.y; // Left
             msg.Twist.Twist.Linear.Z = imuSim.imuVelLocal.z; // Up
 
-            msg.Twist.Twist.Angular = new geometry_msgs.msg.Vector3();
             msg.Twist.Twist.Angular.X = imuSim.imuGyro.x; 
             msg.Twist.Twist.Angular.Y = imuSim.imuGyro.y; 
             msg.Twist.Twist.Angular.Z = imuSim.imuGyro.z; 
 
-            for (int i = 0; i < msg.Twist.Covariance.Length; i++)
-            {
-                msg.Twist.Covariance[i] = 0.0;
-            }
         }
 
-        // private Time GetCurrentTime()
-        // {
-        //     // Return the current ROS2 time
-        //     return new Time
-        //     {
-        //         sec = (int)DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
-        //         nanosec = (uint)(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() % 1000 * 1000000)
-        //     };
-        // }
     }
 }

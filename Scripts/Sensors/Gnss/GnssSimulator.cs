@@ -69,11 +69,11 @@ public class GnssSimulator : MonoBehaviour
 
     public static (ushort, uint) GetGPSWeekAndMS()
     {
-        double epoch = 3657.0 * 24.0 * 60.0 * 60.0;
+        double epoch = 3657.0 * 24.0 * 60.0 * 60.0; //offset to gps 
         double week_s = 604800;
 
         // mimic unix time secs from 1970
-        TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
+        TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1)); //linux 
         double gps_time = t.TotalSeconds + 18.0 - epoch;
         ushort weeks = (ushort)(gps_time / week_s);
         double rem_seconds = gps_time - (weeks * week_s);

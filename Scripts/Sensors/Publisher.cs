@@ -16,6 +16,7 @@ out of or in connection with the software or the use of the software.
 using UnityEngine;
 using ROS2;
 using AWSIM;
+using System;
 
 namespace Autonoma
 {
@@ -69,6 +70,10 @@ public class Publisher<T> : MonoBehaviour, IPublisherBase where T : ROS2.Message
         {
             SimulatorROS2Node.UpdateROSTimestamp(ref header);
         }
+        else
+        {
+            Debug.Log($"Message type {msg.GetType().Name} does not have a header.");
+        }
         // Publish to ROS2.
         publisher.Publish(msg);
         OnPublishMessage();
@@ -83,5 +88,6 @@ public class Publisher<T> : MonoBehaviour, IPublisherBase where T : ROS2.Message
     {
         this.gameObject.SetActive(isActive);
     }
+
 }
 } // end of autonoma namespace

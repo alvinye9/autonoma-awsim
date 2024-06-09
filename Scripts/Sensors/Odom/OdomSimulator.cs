@@ -23,10 +23,10 @@ namespace Autonoma
 public class OdomSimulator : MonoBehaviour
 {
 
-    public Vector3 position; // Stores easting, northing (UTM), and height
-    public Quaternion orientation; // Stores the quaternion orientation
-    public Vector3 linearVelocity; // Linear velocity in the vehicle's frame
-    public Vector3 angularVelocity; // Angular velocity (roll, pitch, yaw rates)
+    // public Vector3 position; // Stores easting, northing (UTM), and height
+    // public Quaternion orientation; // Stores the quaternion orientation
+    // public Vector3 linearVelocity; // Linear velocity in the vehicle's frame
+    // public Vector3 angularVelocity; // Angular velocity (roll, pitch, yaw rates)
     public Rigidbody rb;
     void Start()
     {
