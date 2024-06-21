@@ -39,7 +39,12 @@ public class SensorMenuController : MonoBehaviour
     public Toggle enableBottomToggle;
     public Toggle enableVectorNavToggle;
     public Toggle enableCanToggle;
-    
+    public Toggle enableFLWheelToggle;
+    public Toggle enableFRWheelToggle;
+    public Toggle enableRLWheelToggle;
+    public Toggle enableRRWheelToggle;
+    public Toggle enableFrontDiffToggle;
+    public Toggle enableRearDiffToggle;
     public TMP_Dropdown sensorSetDropdown;
     
     public TMP_InputField sensorSetNameInput;
@@ -52,6 +57,12 @@ public class SensorMenuController : MonoBehaviour
         enableBottomToggle.isOn = scenarioMenu.tmpSensorSet.EnableBottom;
         enableVectorNavToggle.isOn = scenarioMenu.tmpSensorSet.EnableVectorNav;
         enableCanToggle.isOn = scenarioMenu.tmpSensorSet.EnableCan;
+        enableFLWheelToggle.isOn = scenarioMenu.tmpSensorSet.EnableFLWheel;
+        enableFRWheelToggle.isOn = scenarioMenu.tmpSensorSet.EnableFRWheel;
+        enableRLWheelToggle.isOn = scenarioMenu.tmpSensorSet.EnableRLWheel;
+        enableRRWheelToggle.isOn = scenarioMenu.tmpSensorSet.EnableRRWheel;
+        enableFrontDiffToggle.isOn = scenarioMenu.tmpSensorSet.EnableFrontDiff;
+        enableRearDiffToggle.isOn = scenarioMenu.tmpSensorSet.EnableRearDiff;
 
         mainMenuButton.onClick.AddListener( GameManager.Instance.UIManager.OnMainMenuPressed );
         saveSensorSetButton.onClick.AddListener( saveSensorSetButtonPressed );
@@ -60,11 +71,20 @@ public class SensorMenuController : MonoBehaviour
         vehSetupButton.onClick.AddListener( vehSetupButtonPressed );
         sensorSetupButton.onClick.AddListener( sensorSetupButtonPressed );
         addSensorButton.onClick.AddListener( addSensorButtonPressed  );
+
         sensorSetDropdown.onValueChanged.AddListener(delegate { chosenSensorSetChanged(sensorSetDropdown); } );
         enableTopToggle.onValueChanged.AddListener(delegate { enableTopToggleChanged(enableTopToggle); } );
         enableBottomToggle.onValueChanged.AddListener(delegate { enableBottomToggleChanged(enableBottomToggle); } );
         enableVectorNavToggle.onValueChanged.AddListener(delegate { enableVectorNavToggleChanged(enableVectorNavToggle); } );
         enableCanToggle.onValueChanged.AddListener(delegate { enableCanToggleChanged(enableCanToggle); } );
+
+        enableFLWheelToggle.onValueChanged.AddListener(delegate { enableFLWheelToggleChanged(enableFLWheelToggle); } );
+        enableFRWheelToggle.onValueChanged.AddListener(delegate { enableFRWheelToggleChanged(enableFRWheelToggle); } );
+        enableRLWheelToggle.onValueChanged.AddListener(delegate { enableRLWheelToggleChanged(enableRLWheelToggle); } );
+        enableRRWheelToggle.onValueChanged.AddListener(delegate { enableRRWheelToggleChanged(enableRRWheelToggle); } );
+
+        enableFrontDiffToggle.onValueChanged.AddListener(delegate { enableFrontDiffToggleChanged(enableFrontDiffToggle); } );
+        enableRearDiffToggle.onValueChanged.AddListener(delegate { enableRearDiffToggleChanged(enableRearDiffToggle); } );
     }
 
     private void OnEnable() 
@@ -133,6 +153,37 @@ public class SensorMenuController : MonoBehaviour
     {
         updateTmpSensorSet();
         scenarioMenu.tmpSensorSet.EnableCan = enableCanToggle.isOn;
+    }
+
+    private void enableFLWheelToggleChanged(Toggle enableFLWheelToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableFLWheel = enableFLWheelToggle.isOn;
+    }
+    private void enableFRWheelToggleChanged(Toggle enableFRWheelToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableFRWheel = enableFRWheelToggle.isOn;
+    }
+    private void enableRLWheelToggleChanged(Toggle enableRLWheelToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableRLWheel = enableRLWheelToggle.isOn;
+    }
+    private void enableRRWheelToggleChanged(Toggle enableRRWheelToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableRRWheel = enableRRWheelToggle.isOn;
+    }
+    private void enableFrontDiffToggleChanged(Toggle enableFrontDiffToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableFrontDiff = enableFrontDiffToggle.isOn;
+    }
+    private void enableRearDiffToggleChanged(Toggle enableRearDiffToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableRearDiff = enableRearDiffToggle.isOn;
     }
 
     private void saveSensorSetButtonPressed()

@@ -438,7 +438,13 @@ public class ScenarioMenuController : MonoBehaviour
             tmpSensorSet.EnableBottom = true;
             tmpSensorSet.EnableVectorNav = true;
             tmpSensorSet.EnableCan = true;
-
+            tmpSensorSet.EnableFLWheel = true;
+            tmpSensorSet.EnableFRWheel = true;
+            tmpSensorSet.EnableRLWheel = true;
+            tmpSensorSet.EnableRRWheel = true;
+            tmpSensorSet.EnableFrontDiff = true;
+            tmpSensorSet.EnableRearDiff = true;
+            
             saveSensorSet(tmpSensorSet);
         }
 

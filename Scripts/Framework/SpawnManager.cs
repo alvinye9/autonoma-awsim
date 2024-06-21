@@ -144,11 +144,10 @@ public class SpawnManager : MonoBehaviour
         //     // vi.gameObject.SetActive(true);
         // }
 
-        // Disable the Novatel PWRPAK7 Top component based on sensor setup 
+        // Disable Sensor Publishers in instantiated Vehicle
         Transform novatelTopTransform = vehicleInstance.transform.Find("URDF/base_link/Novatel PWRPAK7 Top");
         if (novatelTopTransform != null)
         {
-            // Debug.LogWarning("Novatel Top Enabled: " + GameManager.Instance.Settings.mySensorSet.EnableTop );
             if (!GameManager.Instance.Settings.mySensorSet.EnableTop)
             {
                 novatelTopTransform.gameObject.SetActive(false);
@@ -158,8 +157,7 @@ public class SpawnManager : MonoBehaviour
                 novatelTopTransform.gameObject.SetActive(true);
             }
         }
-        else
-        {
+        else{
             Debug.LogWarning("Novatel PWRPAK7 Top object not found");
             
         }
@@ -218,8 +216,81 @@ public class SpawnManager : MonoBehaviour
             
         }
 
+        // Disable the WheelController scripts in the instantiated vehicle
+        Transform wheelControllerTransform = vehicleInstance.transform.Find("Wheels/FrontLeft");
+        if (wheelControllerTransform != null)
+        {
+            var wheelController = wheelControllerTransform.GetComponent<WheelController>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableFLWheel)
+            {
+                wheelController.enabled = false;
+            }
+            else{
+                wheelController.enabled = true;
+            }
+        }
 
+        Transform FRTransform= vehicleInstance.transform.Find("Wheels/FrontRight");
+        if (FRTransform!= null)
+        {
+            var wheelController = FRTransform.GetComponent<WheelController>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableFRWheel)
+            {
+                wheelController.enabled = false;
+            }
+            else{
+                wheelController.enabled = true;
+            }
+        }
 
+        Transform RLTransform= vehicleInstance.transform.Find("Wheels/RearLeft");
+        if (RLTransform!= null)
+        {
+            var wheelController = RLTransform.GetComponent<WheelController>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableRLWheel)
+            {
+                wheelController.enabled = false;
+            }
+            else{
+                wheelController.enabled = true;
+            }
+        }
+        Transform RRTransform= vehicleInstance.transform.Find("Wheels/RearRight");
+        if (RRTransform!= null)
+        {
+            var wheelController = RRTransform.GetComponent<WheelController>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableRRWheel)
+            {
+                wheelController.enabled = false;
+            }
+            else{
+                wheelController.enabled = true;
+            }
+        }
+        Transform FrontDiffTransform= vehicleInstance.transform.Find("FrontDifferential");
+        if (FrontDiffTransform!= null)
+        {
+            var diffController = FrontDiffTransform.GetComponent<Differential>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableFrontDiff)
+            {
+                diffController.enabled = false;
+            }
+            else{
+                diffController.enabled = true;
+            }
+        }
+        Transform RearDiffTransform= vehicleInstance.transform.Find("RearDifferential");
+        if (RearDiffTransform!= null)
+        {
+            var diffController = RearDiffTransform.GetComponent<Differential>();
+            if (!GameManager.Instance.Settings.mySensorSet.EnableRearDiff)
+            {
+                diffController.enabled = false;
+            }
+            else{
+                diffController.enabled = true;
+            }
+        }
     }
 
     public void SpawnNPCVehicle(int idx, bool isPit)

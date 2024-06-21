@@ -130,6 +130,14 @@ public class SensorSet
     public bool EnableCan;
 
     //disable actuators
+    public bool EnableFLWheel;
+    public bool EnableFRWheel;
+    public bool EnableRLWheel;
+    public bool EnableRRWheel;
+    public bool EnableFrontDiff;
+    public bool EnableRearDiff;
+
+
 
     public SensorSet()
     {
