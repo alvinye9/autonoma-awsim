@@ -2283,6 +2283,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &657786175 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7086722324573781164, guid: 36246e83c4a27341780d89a821084365, type: 3}
+  m_PrefabInstance: {fileID: 690883139648662562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &682894844
 GameObject:
   m_ObjectHideFlags: 0
@@ -4023,6 +4034,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1286109185}
   m_CullTransparentMesh: 1
+--- !u!114 &1297185444 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7086722325391167471, guid: 36246e83c4a27341780d89a821084365, type: 3}
+  m_PrefabInstance: {fileID: 690883139648662562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1346243134
 GameObject:
   m_ObjectHideFlags: 0
@@ -4701,6 +4723,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &1665219097 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7086722324720084926, guid: 36246e83c4a27341780d89a821084365, type: 3}
+  m_PrefabInstance: {fileID: 690883139648662562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1702869008
 GameObject:
   m_ObjectHideFlags: 0
@@ -5757,6 +5790,17 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
+--- !u!114 &2134584723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7086722324510475490, guid: 36246e83c4a27341780d89a821084365, type: 3}
+  m_PrefabInstance: {fileID: 690883139648662562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &690883139648662562
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5795,6 +5839,22 @@ PrefabInstance:
     - target: {fileID: 1899084872, guid: 36246e83c4a27341780d89a821084365, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 29385367754542597, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: m_Name
+      value: LatInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 29385368425637460, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: m_Name
+      value: LonInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 29385368555175238, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: m_Name
+      value: YawInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 29385368618452232, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: m_Name
+      value: HeightInput
       objectReference: {fileID: 0}
     - target: {fileID: 59796594779405918, guid: 36246e83c4a27341780d89a821084365, type: 3}
       propertyPath: m_IsActive
@@ -6084,6 +6144,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -575.71826
       objectReference: {fileID: 0}
+    - target: {fileID: 1847016267544790106, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: latLonHeightYawInput.Array.data[0]
+      value: 
+      objectReference: {fileID: 1297185444}
+    - target: {fileID: 1847016267544790106, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: latLonHeightYawInput.Array.data[1]
+      value: 
+      objectReference: {fileID: 1665219097}
+    - target: {fileID: 1847016267544790106, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: latLonHeightYawInput.Array.data[2]
+      value: 
+      objectReference: {fileID: 2134584723}
+    - target: {fileID: 1847016267544790106, guid: 36246e83c4a27341780d89a821084365, type: 3}
+      propertyPath: latLonHeightYawInput.Array.data[3]
+      value: 
+      objectReference: {fileID: 657786175}
     - target: {fileID: 2080260990201916795, guid: 36246e83c4a27341780d89a821084365, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

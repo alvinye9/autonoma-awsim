@@ -56,8 +56,7 @@ public class ScenarioMenuController : MonoBehaviour
     public TMP_InputField[] carSpawnPosInput = new TMP_InputField[3];
     public TMP_InputField[] carNumInput = new TMP_InputField[3];
     public TMP_InputField[] rosDomainInput = new TMP_InputField[3];
-
-    // public TMP_InputField[] latLonHeightYawInput = new TMP_InputField[4];
+    public TMP_InputField[] latLonHeightYawInput = new TMP_InputField[4];
 
 
     private float lat_input;
@@ -81,6 +80,7 @@ public class ScenarioMenuController : MonoBehaviour
 
     private void Start() 
     {
+        // Debug.Log(UnityEngine.Rendering.GraphicsSettings.renderPipelineAsset.GetType().Name);
         LoadedScenarioObjs = SaveDataManager.LoadAllScenarios();
         LoadedVehSetups = SaveDataManager.LoadAllVehicleSetups();
         LoadedSensorSets = SaveDataManager.LoadAllSensorSets();
@@ -111,6 +111,14 @@ public class ScenarioMenuController : MonoBehaviour
 
         trackDropdown.value = tmpScenarioObj.SelectedTrack;
         trackDropdown.RefreshShownValue();
+
+        // Fill latLonHeightYawInput fields with the values from the loaded scenario
+        latLonHeightYawInput[0].text = tmpScenarioObj.lat_input.ToString();
+        latLonHeightYawInput[1].text = tmpScenarioObj.lon_input.ToString();
+        latLonHeightYawInput[2].text = tmpScenarioObj.height_input.ToString();
+        latLonHeightYawInput[3].text = tmpScenarioObj.yaw_input.ToString();
+
+
         saveScenarioButtonPressed();
 
         // sensorSetupButton.interactable = false;
@@ -444,7 +452,7 @@ public class ScenarioMenuController : MonoBehaviour
             tmpSensorSet.EnableRRWheel = true;
             tmpSensorSet.EnableFrontDiff = true;
             tmpSensorSet.EnableRearDiff = true;
-            
+
             saveSensorSet(tmpSensorSet);
         }
 
@@ -464,10 +472,10 @@ public class ScenarioMenuController : MonoBehaviour
 
         if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("GiantSkidpad")) //only allow custom lat/lon/height/yaw values for skidpad
         {
-        GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = lat_input;
-        GameManager.Instance.Settings.myTrackParams.LON_ORIGIN = lon_input;
-        GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = height_input;
-        GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input;
+        GameManager.Instance.Settings.myTrackParams.LAT_ORIGIN = tmpScenarioObj.lat_input;
+        GameManager.Instance.Settings.myTrackParams.LON_ORIGIN = tmpScenarioObj.lon_input;
+        GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = tmpScenarioObj.height_input;
+        GameManager.Instance.Settings.myTrackParams.carRotation.y = tmpScenarioObj.yaw_input;
         }
          
     }
@@ -572,9 +580,11 @@ public class ScenarioMenuController : MonoBehaviour
     }
     public void ReadLatInput(string input)
     {
+        updateTmpScenario();
         if (float.TryParse(input, out float latValue))
         {
             lat_input  = latValue;
+            tmpScenarioObj.lat_input = latValue;
             Debug.Log(latValue);
         }
         else
@@ -584,9 +594,11 @@ public class ScenarioMenuController : MonoBehaviour
     }
     public void ReadLonInput(string input)
     {
+        updateTmpScenario();
         if (float.TryParse(input, out float lonValue))
         {
             lon_input  = lonValue;
+            tmpScenarioObj.lon_input = lonValue;
             Debug.Log(lonValue);
         }
         else
@@ -599,6 +611,7 @@ public class ScenarioMenuController : MonoBehaviour
         if (float.TryParse(input, out float heightValue))
         {
             height_input  = heightValue;
+            tmpScenarioObj.height_input = heightValue;
             Debug.Log(heightValue);
         }
         else
@@ -612,6 +625,7 @@ public class ScenarioMenuController : MonoBehaviour
         if (float.TryParse(input, out float yawValue))
         {
             yaw_input  = yawValue;
+            tmpScenarioObj.yaw_input = yawValue;
             Debug.Log(yawValue);
         }
         else

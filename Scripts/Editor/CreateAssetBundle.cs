@@ -23,7 +23,7 @@ public class CreateAssetBundle
     [MenuItem("Assets/Build Asset Bundles")]
     private static void BuildAssetBundles()
     {
-        string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal)+"/AWSIM/AssetBundles/";
+        string path = Environment.GetFolderPath(Environment.SpecialFolder.Personal)+"/PAIRSIM/AssetBundles/";
 
         if (!Directory.Exists(path+"Windows/")) Directory.CreateDirectory(path+"Windows/");
         if (!Directory.Exists(path+"Linux/")) Directory.CreateDirectory(path+"Linux/");

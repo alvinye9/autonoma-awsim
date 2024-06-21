@@ -24,6 +24,10 @@ public class ScenarioObj
     public int SelectedTrack;
     public bool HotStart;
     public bool IsPit;
+    public float lat_input;
+    public float lon_input;
+    public float height_input;
+    public float yaw_input;
 
     public List<Car> Cars;
     public ScenarioObj()
