@@ -32,7 +32,7 @@ public static class SaveDataManager
     {
         string path = "";
         path = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        return Path.Combine(path, "AWSIM");
+        return Path.Combine(path, "PAIRSIM_config");
     }
 
     public static void SaveScenario(ScenarioObj obj)
@@ -54,7 +54,7 @@ public static class SaveDataManager
     public static void SaveVehicleSetup(VehSetup obj)
     {
         obj.Version = currentVersion;
-        string json = JsonConvert.SerializeObject(obj,Formatting.Indented);;
+        string json = JsonConvert.SerializeObject(obj,Formatting.Indented);
         string folderName = vehSetupFolderName;
         string fullPath = Path.Combine(GetSavePath(), folderName);
         
@@ -69,6 +69,7 @@ public static class SaveDataManager
 
     public static void SaveSensorSet(SensorSet obj)
     {
+        Debug.Log("SAVING SENSOR SET UP");
         obj.Version = currentVersion;
         var settings = new JsonSerializerSettings
         {
@@ -82,6 +83,7 @@ public static class SaveDataManager
         settings.Converters.Add(new SensorOptionsConverter());
 
         string json = JsonConvert.SerializeObject(obj, Formatting.Indented, settings);
+
         string folderName = sensorSetFolderName;
         string fullPath = Path.Combine(GetSavePath(), folderName);
         
@@ -91,6 +93,7 @@ public static class SaveDataManager
         }
         string fullPath2 = Path.Combine(fullPath, obj.Name + ".dat");
 
+        Debug.Log(fullPath2);
         WriteToFile(fullPath2,json);
     }
     

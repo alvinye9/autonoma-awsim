@@ -67,7 +67,6 @@ public class ScenarioMenuController : MonoBehaviour
     private float yaw_input;
 
     private bool isPit;
-
     
     private void Awake()
     {  
@@ -85,6 +84,7 @@ public class ScenarioMenuController : MonoBehaviour
         LoadedScenarioObjs = SaveDataManager.LoadAllScenarios();
         LoadedVehSetups = SaveDataManager.LoadAllVehicleSetups();
         LoadedSensorSets = SaveDataManager.LoadAllSensorSets();
+
 
         fillTrackDropdown(0);
         checkForDefaultScenario();
@@ -113,7 +113,7 @@ public class ScenarioMenuController : MonoBehaviour
         trackDropdown.RefreshShownValue();
         saveScenarioButtonPressed();
 
-        sensorSetupButton.interactable = false;
+        // sensorSetupButton.interactable = false;
 
         if(GameManager.Instance.Settings.shouldBypassMenu)
         {
@@ -171,9 +171,21 @@ public class ScenarioMenuController : MonoBehaviour
     void fillTrackDropdown(int idx)
     {   
         trackDropdown.ClearOptions(); 
+        int lvmsCount = 0;
+
         foreach(TrackParams track in LoadedTrackList.MyTrackList)
         {
-            var op = new TMP_Dropdown.OptionData(track.TrackName);
+            string displayName = track.TrackName;
+            // if (track.TrackName == "LVMS")
+            // {
+            //     lvmsCount++;
+            //     if (lvmsCount == 2)
+            //     {
+            //         displayName = "Kentucky Speedway";  //since Kentucky Speedway Oval is the same dimensions as LVMS Oval, just make it instantiate the same track
+            //     }
+            // }
+            var op = new TMP_Dropdown.OptionData(displayName);
+            // Debug.Log(track.TrackName);
             trackDropdown.options.Add(op);
         }
         trackDropdown.value = idx;
@@ -379,9 +391,12 @@ public class ScenarioMenuController : MonoBehaviour
 
     private void checkForDefaultSensorSets()
     {
+        Debug.Log("Number of Sensor Sets: " + LoadedSensorSets.Count );
         if (LoadedSensorSets.Count < 1)
         {
             tmpSensorSet.Name = "Default IAC";
+            tmpSensorSet.EnableTop = true;
+            Debug.Log("Loading DefaulT Sensor Setup");
 
             // Novatel
             ISensor novatel = SensorFactory.CreateGnssInsSensor();
@@ -419,6 +434,12 @@ public class ScenarioMenuController : MonoBehaviour
             gtSensor.IsActive = true;
             tmpSensorSet.SensorList.Add(gtSensor);
 
+            tmpSensorSet.EnableTop = true;
+            tmpSensorSet.EnableBottom = true;
+            tmpSensorSet.EnableVectorNav = true;
+            tmpSensorSet.EnableRaptor = true;
+            tmpSensorSet.EnableGroundTruth = true;
+
             saveSensorSet(tmpSensorSet);
         }
 
@@ -431,6 +452,7 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myScenarioObj = tmpScenarioObj;
         GameManager.Instance.Settings.myVehSetup = tmpVehSetup;
         GameManager.Instance.Settings.mySensorSet = tmpSensorSet;
+        // Debug.Log("Enable Novatel Top 2: " + tmpSensorSet.EnableTop);
         GameManager.Instance.Settings.myTrackParams = LoadedTrackList.MyTrackList[tmpScenarioObj.SelectedTrack];
         GameManager.Instance.ChangeStateTo(GameManager.SimulationState.DRIVE);
         GameManager.Instance.StartCoroutine(GameManager.Instance.ChangeScene("DrivingScene"));
@@ -442,11 +464,6 @@ public class ScenarioMenuController : MonoBehaviour
         GameManager.Instance.Settings.myTrackParams.HEIGHT_ORIGIN = height_input;
         GameManager.Instance.Settings.myTrackParams.carRotation.y = yaw_input;
         }
-
-        // if (GameManager.Instance.Settings.myTrackParams.TrackName.Equals("LVMS")) //change car spawn position for LVMS in SpawnManager instead...
-        // {
-        // GameManager.Instance.Settings.myTrackParams.carSpawnPositions[0] = new Vector3(-450f, -12f, 0f);
-        // }
          
     }
 

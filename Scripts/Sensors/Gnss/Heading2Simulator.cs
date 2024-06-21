@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,10 +41,8 @@ public class Heading2Simulator : MonoBehaviour
         // float relativeAngle = 90.0F + Mathf.Atan2(-secondaryAntPos.z,secondaryAntPos.x)*180f/Mathf.PI; //added
         // CW +, [deg], NORTH = 0 (EAST = 90). 0-360 
         heading2 = HelperFunctions.MathMod((180f - imuAngle.z + relativeAngle )  + 90.0f ,360f);
+        // Debug.Log(heading2);
         
-        
-        
-
 
     }
 

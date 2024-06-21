@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -41,6 +41,8 @@ public class Heading2Publisher : Publisher<HEADING2>
     public Heading2Simulator heading2Sim;
     public override void fillMsg()
     {
+        // msg.Header.Frame_id = modifiedFrameId;
+
         (ushort week, uint ms) weekMs = GnssSimulator.GetGPSWeekAndMS();
         msg.Nov_header.Gps_week_number = weekMs.week;
         msg.Nov_header.Gps_week_milliseconds = weekMs.ms;
@@ -48,6 +50,7 @@ public class Heading2Publisher : Publisher<HEADING2>
         msg.Pos_type = new PositionOrVelocityType();
         msg.Pos_type.Type = 50;
         msg.Heading = heading2Sim.heading2; //FIXME, added 90
+        // Debug.Log(modifiedRosNamespace + ": " + msg.Heading);
         msg.Heading_stdev = 2.13f;
         msg.Num_sv_tracked = 15;
         msg.Num_sv_in_sol = 12;

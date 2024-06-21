@@ -24,6 +24,7 @@ public class ScenarioObj
     public int SelectedTrack;
     public bool HotStart;
     public bool IsPit;
+
     public List<Car> Cars;
     public ScenarioObj()
     {   
@@ -122,6 +123,13 @@ public class SensorSet
     public int Version;
     public List<ISensor> SensorList;
 
+    //disable sensor publishers
+    public bool EnableTop;
+    public bool EnableBottom;
+    public bool EnableVectorNav;
+    public bool EnableRaptor;
+    public bool EnableGroundTruth;
+
     public SensorSet()
     {
         SensorList = new List<ISensor>();
@@ -184,6 +192,7 @@ public class VehSetup
     public bool IsThermalTyre;
     public float AmbientTemp;
     public float TrackTemp;
+
 }
 
 public class RaceControl

@@ -34,6 +34,12 @@ public class SensorMenuController : MonoBehaviour
     public Button sensorSetupButton;
     public Button vehSetupButton;
     public Button addSensorButton;
+
+    public Toggle enableTopToggle;
+    public Toggle enableBottomToggle;
+    public Toggle enableVectorNavToggle;
+    public Toggle enableGroundTruthToggle;
+    public Toggle enableRaptorToggle;
     
     public TMP_Dropdown sensorSetDropdown;
     
@@ -51,6 +57,11 @@ public class SensorMenuController : MonoBehaviour
         sensorSetupButton.onClick.AddListener( sensorSetupButtonPressed );
         addSensorButton.onClick.AddListener( addSensorButtonPressed  );
         sensorSetDropdown.onValueChanged.AddListener(delegate { chosenSensorSetChanged(sensorSetDropdown); } );
+        enableTopToggle.onValueChanged.AddListener(delegate { enableTopToggleChanged(enableTopToggle); } );
+        enableBottomToggle.onValueChanged.AddListener(delegate { enableBottomToggleChanged(enableBottomToggle); } );
+        enableVectorNavToggle.onValueChanged.AddListener(delegate { enableVectorNavToggleChanged(enableVectorNavToggle); } );
+        enableRaptorToggle.onValueChanged.AddListener(delegate { enableRaptorToggleChanged(enableRaptorToggle); } );
+        enableGroundTruthToggle.onValueChanged.AddListener(delegate { enableGroundTruthToggleChanged(enableGroundTruthToggle); } );
     }
 
     private void OnEnable() 
@@ -98,6 +109,32 @@ public class SensorMenuController : MonoBehaviour
         scenarioMenu.tmpSensorSet = reversedLoadedSensorSets[idx];
         
         sensorSetNameInput.text = scenarioMenu.tmpSensorSet.Name;
+    }
+
+    private void enableTopToggleChanged(Toggle enableTopToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableTop = enableTopToggle.isOn;
+    }
+    private void enableBottomToggleChanged(Toggle enableBottomToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableBottom = enableBottomToggle.isOn;
+    }
+    private void enableVectorNavToggleChanged(Toggle enableVectorNavToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableVectorNav = enableVectorNavToggle.isOn;
+    }
+    private void enableRaptorToggleChanged(Toggle enableRaptorToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableRaptor = enableRaptorToggle.isOn;
+    }
+    private void enableGroundTruthToggleChanged(Toggle enableGroundTruthToggle)
+    {
+        updateTmpSensorSet();
+        scenarioMenu.tmpSensorSet.EnableGroundTruth = enableGroundTruthToggle.isOn;
     }
 
     private void saveSensorSetButtonPressed()
@@ -148,6 +185,7 @@ public class SensorMenuController : MonoBehaviour
     {   
         // Put all input data to tmpSensorSet object
         scenarioMenu.tmpSensorSet.Name = sensorSetNameInput.text;
+        Debug.Log("Name of Sensor Set: " + scenarioMenu.tmpSensorSet.Name);
     }
 
     private void saveSensorSet(SensorSet inputObj)

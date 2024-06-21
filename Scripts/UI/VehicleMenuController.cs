@@ -65,7 +65,7 @@ public class VehicleMenuController : MonoBehaviour
         vehSetupDropdown.onValueChanged.AddListener(delegate { chosenVehSetupChanged(vehSetupDropdown); } );
         idealSteeringInput.onValueChanged.AddListener(delegate { chosenSteeringTypeChanged(idealSteeringInput); } );
 
-        sensorSetupButton.interactable = false;
+        // sensorSetupButton.interactable = false;
 
     }
 

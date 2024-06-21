@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 2855584503223177042}
   - component: {fileID: 8200978788070277805}
   m_Layer: 0
-  m_Name: secondary_antenna
+  m_Name: secondary_antenna_bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5747,7 +5747,7 @@ GameObject:
   - component: {fileID: 3558366476853582130}
   - component: {fileID: 786613502490750100}
   m_Layer: 0
-  m_Name: secondary_antenna
+  m_Name: secondary_antenna_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
