@@ -127,8 +127,9 @@ public class SensorSet
     public bool EnableTop;
     public bool EnableBottom;
     public bool EnableVectorNav;
-    public bool EnableRaptor;
-    public bool EnableGroundTruth;
+    public bool EnableCan;
+
+    //disable actuators
 
     public SensorSet()
     {

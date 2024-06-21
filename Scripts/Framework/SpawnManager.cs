@@ -200,6 +200,24 @@ public class SpawnManager : MonoBehaviour
             
         }
 
+        Transform raptorTransform = vehicleInstance.transform.Find("URDF/base_link/Vehicle Sensors");
+        if (raptorTransform != null)
+        {
+            if (!GameManager.Instance.Settings.mySensorSet.EnableCan)
+            {
+                raptorTransform.gameObject.SetActive(false);
+            }
+            else
+            {
+                raptorTransform.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Vehicle Sensors object not found");
+            
+        }
+
 
 
     }

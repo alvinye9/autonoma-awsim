@@ -437,8 +437,7 @@ public class ScenarioMenuController : MonoBehaviour
             tmpSensorSet.EnableTop = true;
             tmpSensorSet.EnableBottom = true;
             tmpSensorSet.EnableVectorNav = true;
-            tmpSensorSet.EnableRaptor = true;
-            tmpSensorSet.EnableGroundTruth = true;
+            tmpSensorSet.EnableCan = true;
 
             saveSensorSet(tmpSensorSet);
         }
