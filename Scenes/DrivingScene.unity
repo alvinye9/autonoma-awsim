@@ -406,7 +406,7 @@ MonoBehaviour:
   vehiclePrefab: {fileID: 7209270688275563199, guid: 014b6bc1310046d5a84df9f497308ac3, type: 3}
   npcVehiclePrefab: {fileID: 4969617595524111395, guid: dd1885b81b19a6fc5aad74312b417993, type: 3}
   npc2VehiclePrefab: {fileID: 5683614796508676486, guid: 3e4748acbb00be7e08a34b692324ed42, type: 3}
-  kentuckyPrefab: {fileID: 1802418418913696903, guid: 25cd4fc955af44fc08b6e75e8222e893, type: 3}
+  kentuckyPrefab: {fileID: 1041701011421019593, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
   materials:
   - {fileID: 2100000, guid: 9880c9adf0e013c42bbc176e05cd544e, type: 2}
   - {fileID: 2100000, guid: 6de6ffd28aef1724a94edfe55836b35f, type: 2}

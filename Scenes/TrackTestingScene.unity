@@ -631,6 +631,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2092514181bc2a44e8ff8f13c7f6be0a, type: 3}
+--- !u!1001 &1724613943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.44228873
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.8968727
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 127.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 378035326445840243, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1041701011421019593, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
+      propertyPath: m_Name
+      value: kentucky_speedway
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 883b7d05b5a49c7319a5c011eca575e5, type: 3}
 --- !u!1 &1744939267
 GameObject:
   m_ObjectHideFlags: 0

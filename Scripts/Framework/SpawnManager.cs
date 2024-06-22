@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
     private GameObject vehiclePrefab;
     public GameObject npcVehiclePrefab;
     public GameObject npc2VehiclePrefab;
-    // public GameObject kentuckyPrefab;
+    public GameObject kentuckyPrefab;
     public Material[] materials;
     public RaceControlMenuController raceControlMenu;
     private TrackParams trackParams;
@@ -491,23 +491,61 @@ public class SpawnManager : MonoBehaviour
                 if(GameManager.Instance.Settings.myTrackParams.TrackName == "Kentucky Speedway")
                 {
                     Debug.Log("INSTANTIATING KENTUCKY SPEEDWAY TRACK");
-                    // Vector3 position = new Vector3(265f, 7.2f, -195f);  
-                    // Quaternion rotation = Quaternion.Euler(0, 165f, 0);  
-                    // Vector3 position = new Vector3(260f, 7.2f, -205f);  
-                    // Quaternion rotation = Quaternion.Euler(0, 167f, 0);  
-                    // Vector3 position = new Vector3(250f, 7.0f, -214f);  
-                    // Quaternion rotation = Quaternion.Euler(0, 169f, 0); 
+//CCW is negatibe
+//CW is positive
+                    // Vector3 position = new Vector3(458f, -2.1f, -357f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 127f, 0f);  
+                    // Vector3 scale = new Vector3(1.0f, 1.15f, 1.0f); //scale too big
 
-                    // Vector3 position = new Vector3(245f, 6.5f, -208f);  //for 0.78 scale
-                    // Vector3 position = new Vector3(241f, 6.5f, -206f);  //for 0.77 scale
-                    Vector3 position = new Vector3(225f, 6.5f, -225f);  //for 0.77 scale, shifted
-                    // Vector3 position = new Vector3(236f, 6.5f, -200f);  //for 0.75 scale (TOO SMALL)
-                    Quaternion rotation = Quaternion.Euler(0, 169f, 0); 
+                    // Vector3 position = new Vector3(435f, -2.0f, -340f);   //too low, need increase rotation angle
+                    // Quaternion rotation = Quaternion.Euler(0f, 127f, 0f);  
+                    // Vector3 scale = new Vector3(0.95f, 1.0f, 0.95f);
 
-                    Vector3 scale = new Vector3(0.77f, 0.6219f, 0.77f); //banking is approx 14-17 deg on turns
-                    GameObject instantiatedTrack = Instantiate(track, position, rotation);
+                    // Vector3 position = new Vector3(429f, -2.1f, -346f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 128f, 0f);  
+                    // Vector3 scale = new Vector3(0.95f, 1.15f, 0.95f); 
 
-                    // GameObject instantiatedTrack = Instantiate(kentuckyPrefab, position, rotation); //for new prefabs
+                    // Vector3 position = new Vector3(440f, -2.0f, -355f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 128f, 0f);  //need to rotate more ccw (127.5?)
+                    // Vector3 scale = new Vector3(0.97f, 1.0f, 0.97f);
+
+                    // Vector3 position = new Vector3(443f, -2.0f, -350f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 127.5f, 0f);  //seems like 127 may be better
+                    // Vector3 scale = new Vector3(0.97f, 1.0f, 0.97f);
+
+                    // Vector3 position = new Vector3(441f, -2.0f, -343f);   //too low, need increase rotation angle (127.5??)
+                    // Quaternion rotation = Quaternion.Euler(0f, 127f, 0f);  
+                    // Vector3 scale = new Vector3(0.96f, 1.0f, 0.96f); //size too big? 
+
+                    // Vector3 position = new Vector3(433f, -2.0f, -343f);   
+                    // Quaternion rotation = Quaternion.Euler(0f, 127.5f, 0f);  //more CCW (127?)
+                    // Vector3 scale = new Vector3(0.95f, 1.0f, 0.95f); //size is right
+
+                    // Vector3 position = new Vector3(441f, -2.0f, -339f);   
+                    // Quaternion rotation = Quaternion.Euler(0f, 126.5f, 0f);  
+                    // Vector3 scale = new Vector3(0.96f, 1.0f, 0.96f); //size too big?
+
+                    // Vector3 position = new Vector3(439f, -2.0f, -346f);   
+                    // Quaternion rotation = Quaternion.Euler(0f, 127.5f, 0f); 
+                    // Vector3 scale = new Vector3(0.96f, 1.0f, 0.96f); 
+
+                    // Vector3 position = new Vector3(435f, -2.0f, -350f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 128f, 0f);  
+                    // Vector3 scale = new Vector3(0.96f, 1.0f, 0.96f);
+
+                    // Vector3 position = new Vector3(430f, -2.0f, -358f);  
+                    // Quaternion rotation = Quaternion.Euler(0f, 129f, 0f);  
+                    // Vector3 scale = new Vector3(0.96f, 1.0f, 0.96f);
+
+
+                    // Vector3 position = new Vector3(432f, -2.3f, -343f); //works
+                    // Vector3 scale = new Vector3(0.97f, 1.0f, 0.95f); 
+
+                    Vector3 position = new Vector3(440f, -1.9f, -342f);
+                    Vector3 scale = new Vector3(0.97f, 1.08f, 0.96f); 
+
+                    Quaternion rotation = Quaternion.Euler(0f, 129f, 0f); 
+                    GameObject instantiatedTrack = Instantiate(kentuckyPrefab, position, rotation); //for new prefabs
                     instantiatedTrack.transform.localScale = scale;
                 }
                 else{
