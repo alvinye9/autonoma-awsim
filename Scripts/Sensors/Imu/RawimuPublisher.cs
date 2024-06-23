@@ -36,7 +36,6 @@ public class RawimuPublisher : Publisher<RAWIMU>
     }
     protected override void Start()
     {
-        Debug.Log("Starting rawimupublisher");
         getPublisherParams();
         this.rosNamespace = modifiedRosNamespace;
         this.topicName = modifiedTopicName;

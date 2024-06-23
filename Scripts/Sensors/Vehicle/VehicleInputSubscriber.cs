@@ -36,7 +36,6 @@ public class VehicleInputSubscriber : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Starting Vehicle Input Subscriber (New Sim)");
         carController = HelperFunctions.GetParentComponent<CarController>(transform);
         var qos = qosSettings.GetQoSProfile();
 

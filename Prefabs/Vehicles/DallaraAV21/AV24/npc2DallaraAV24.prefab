@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1341395888945874675
 Transform:
   m_ObjectHideFlags: 0
@@ -1513,8 +1513,8 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /vectornav
-  modifiedTopicName: /raw/common
+  modifiedRosNamespace: /npc2
+  modifiedTopicName: /vectornav/raw/common
   modifiedFrequency: 100
   modifiedFrameId: 
   gnssSim: {fileID: 4365495329775686450}
@@ -2053,7 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd020510c2ef774a92dc99fbe56b0aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vehicleInputsTopic: /vehicle_inputs
+  vehicleInputsTopic: /npc2/vehicle_inputs
   qosSettings:
     ReliabilityPolicy: 0
     DurabilityPolicy: 0
@@ -2067,7 +2067,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2994663450053762097}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 49382583f3879461996c5b9f14d449c5, type: 3}
   m_Name: 
@@ -2736,7 +2736,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1166999004049825767
 Transform:
   m_ObjectHideFlags: 0
@@ -4169,7 +4169,7 @@ GameObject:
   - component: {fileID: 355629541803049267}
   - component: {fileID: 264682144810106634}
   m_Layer: 0
-  m_Name: DallaraAV24
+  m_Name: npc2DallaraAV24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4805,7 +4805,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /rawimu
   modifiedFrequency: 125
   modifiedFrameId: 
@@ -4827,7 +4827,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /bestgnsspos
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -4849,7 +4849,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /bestpos
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -4871,7 +4871,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /bestgnssvel
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -4893,7 +4893,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /bestvel
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -4938,7 +4938,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /heading2
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -4960,7 +4960,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /imu/data_raw
   modifiedFrequency: 150
   modifiedFrameId: gps_com_imu
@@ -4984,7 +4984,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /odom
   modifiedFrequency: 150
   modifiedFrameId: utm
@@ -5009,7 +5009,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /imu/data
   modifiedFrequency: 150
   modifiedFrameId: gps_com
@@ -5033,7 +5033,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /ins_twist
   modifiedFrequency: 150
   modifiedFrameId: gps_com
@@ -5056,7 +5056,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: /COM
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /fix
   modifiedFrequency: 150
   modifiedFrameId: gps_com_ant1
@@ -5137,7 +5137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3305141505328789847
 Transform:
   m_ObjectHideFlags: 0
@@ -5537,7 +5537,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: 
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /vehicle_data
   modifiedFrequency: 100
   modifiedFrameId: 
@@ -5597,7 +5597,7 @@ MonoBehaviour:
     DurabilityPolicy: 2
     HistoryPolicy: 1
     Depth: 10
-  modifiedRosNamespace: 
+  modifiedRosNamespace: /npc2
   modifiedTopicName: /powertrain_data
   modifiedFrequency: 100
   modifiedFrameId: 

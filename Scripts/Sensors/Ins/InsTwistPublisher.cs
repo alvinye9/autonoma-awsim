@@ -34,7 +34,6 @@ namespace Autonoma
 
         protected override void Start()
         {
-            Debug.Log("Starting ins twist publisher");
             getPublisherParams();
             this.rosNamespace = modifiedRosNamespace;
             this.topicName = modifiedTopicName;

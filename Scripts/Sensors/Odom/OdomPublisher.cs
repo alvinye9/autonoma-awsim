@@ -43,7 +43,6 @@ namespace Autonoma
 
         protected override void Start()
         {
-            Debug.Log("Starting odometry publisher");
             getPublisherParams();
             this.rosNamespace = modifiedRosNamespace;
             this.topicName = modifiedTopicName;

@@ -87,7 +87,7 @@ public class SpawnManager : MonoBehaviour
         Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
         if(isPit){ // shift spawn position to pitlane
-            // Debug.Log("INSIDE PITLANE");
+            Debug.Log("Track: " + trackName);
             float dx = 0f;
             float dy = 0f;
             float dz = 0f;
@@ -95,6 +95,12 @@ public class SpawnManager : MonoBehaviour
                 dx = 53.37f;
                 dy = -1.5f;
                 dz = -59.44f;
+            } 
+            else if (trackName.Equals("Kentucky Speedway.prefab")){
+                dx = 75f;
+                dy = -1.9f;
+                dz = -45f;
+
             }  
             float newX = spawnPosition.x + dx;
             float newY = spawnPosition.y + dy; 
@@ -300,7 +306,7 @@ public class SpawnManager : MonoBehaviour
         string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
         Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
-        if(isPit){ // shift spawn position to pitlane
+        if(isPit){ 
             Debug.Log("INSIDE PITLANE");
             float dx = 0f;
             float dy = 0f;
@@ -309,7 +315,12 @@ public class SpawnManager : MonoBehaviour
                 dx = 53.37f;
                 dy = -1.5f;
                 dz = -59.44f;
-            }  
+            } 
+            else if (trackName.Equals("Kentucky Speedway.prefab")){
+                dx = 75f;
+                dy = -1.9f;
+                dz = -45f;
+            }   
             float newX = spawnPosition.x + dx;
             float newY = spawnPosition.y + dy; 
             float newZ = spawnPosition.z + dz;
@@ -335,28 +346,22 @@ public class SpawnManager : MonoBehaviour
             globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
         }
 
-        // Handle the enabling/disabling of Publishers based on ControlType
+        // Activate all NPC publishers
         bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
-            // Debug.Log("Activating NPC-Vehicle Publishers");
-            //pub.ToggleActive(isROS);
-            // pub.ToggleActive(true);
+            pub.ToggleActive(true);
         }
-
-        // Handle the enabling/disabling of Inputs based on ControlType
         Autonoma.VehicleInputSubscriber[] vehicleSubscribers = vehicleInstance.GetComponentsInChildren<Autonoma.VehicleInputSubscriber>();
         KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
         foreach (KeyboardInputs ki in keyboardInputs)
         {
-            //ki.gameObject.SetActive(!isROS);
-            // ki.gameObject.SetActive(true);
+            ki.gameObject.SetActive(true);
         }
         foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
         {
-            //vi.gameObject.SetActive(isROS);
-            // vi.gameObject.SetActive(true);
+            vi.gameObject.SetActive(true);
         }
 
     }
@@ -366,7 +371,7 @@ public class SpawnManager : MonoBehaviour
         string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
         Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
-        if(isPit){ // shift spawn position to pitlane
+        if(isPit){ 
             Debug.Log("INSIDE PITLANE");
             float dx = 0f;
             float dy = 0f;
@@ -375,6 +380,11 @@ public class SpawnManager : MonoBehaviour
                 dx = 53.37f;
                 dy = -1.5f;
                 dz = -59.44f;
+            }
+            else if (trackName.Equals("Kentucky Speedway.prefab")){
+                dx = 75f;
+                dy = -1.9f;
+                dz = -45f;
             }  
             float newX = spawnPosition.x + dx;
             float newY = spawnPosition.y + dy; 
@@ -399,14 +409,11 @@ public class SpawnManager : MonoBehaviour
             globalCameraManager.allCarCameraList.Add(new CarCameraPair(vehicleCameras[i], vehicleInstance));
         }
 
-        // Handle the enabling/disabling of Publishers based on ControlType
         bool isROS = (GameManager.Instance.Settings.myScenarioObj.Cars[idx].ControlType == ControlType.ROS);
         var vehiclePublishers = vehicleInstance.GetComponentsInChildren<Autonoma.IPublisherBase>();
         foreach (var pub in vehiclePublishers)
         {
-            // Debug.Log("Activating NPC2-Vehicle Publishers");
-            //pub.ToggleActive(isROS);
-            // pub.ToggleActive(true);
+            pub.ToggleActive(true);
         }
 
         // Handle the enabling/disabling of Inputs based on ControlType
@@ -414,13 +421,11 @@ public class SpawnManager : MonoBehaviour
         KeyboardInputs[] keyboardInputs = vehicleInstance.GetComponentsInChildren<KeyboardInputs>();
         foreach (KeyboardInputs ki in keyboardInputs)
         {
-            //ki.gameObject.SetActive(!isROS);
-            // ki.gameObject.SetActive(true);
+            ki.gameObject.SetActive(true);
         }
         foreach (Autonoma.VehicleInputSubscriber vi in vehicleSubscribers)
         {
-            //vi.gameObject.SetActive(isROS);
-            // vi.gameObject.SetActive(true);
+            vi.gameObject.SetActive(true);
         }
     }
     public void SpawnEnvironment()
@@ -483,23 +488,21 @@ public class SpawnManager : MonoBehaviour
             }
 
             GameObject track = myLoadedAssetBundle.LoadAsset<GameObject>(trackName); //trackName is read from tracklist
-            Debug.Log("Enable Novatel Top: " + GameManager.Instance.Settings.mySensorSet.EnableTop);
 
+            //specify position, rotation, and scale of new track instance
             if(trackName.Equals("LVMS.prefab"))
             {
                 if(GameManager.Instance.Settings.myTrackParams.TrackName == "Kentucky Speedway")
                 {
-                    Debug.Log("INSTANTIATING KENTUCKY SPEEDWAY TRACK");
+                    // Vector3 position = new Vector3(440f, -1.9f, -342f);
+                    Vector3 position = new Vector3(438f, -1.9f, -346f);
 
-                    Vector3 position = new Vector3(440f, -1.9f, -342f);
                     Vector3 scale = new Vector3(0.97f, 1.08f, 0.96f); 
                     Quaternion rotation = Quaternion.Euler(0f, 129f, 0f); 
                     GameObject instantiatedTrack = Instantiate(kentuckyPrefab, position, rotation); //for new prefabs
                     instantiatedTrack.transform.localScale = scale;
                 }
                 else{
-                    Debug.Log("INSTANTIATING LVMS TRACK");
-                    // Specify the position, rotation, and scale for the new track instance
                     // Vector3 position = new Vector3(262f, 9f, 368f); //(Car Rotation 107 deg) (based on the PAIR vegas2.csv raceline)
                     Vector3 position = new Vector3(205f, 9.2f, -257f);  //(Car Rotation 230 deg NED) to start at starting line
                     Quaternion rotation = Quaternion.Euler(0, 180f, 0);  
