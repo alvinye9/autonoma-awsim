@@ -119,6 +119,10 @@ public class SpawnManager : MonoBehaviour
 
         raceControlMenu.rosCars.Add(vehicleInstance);
 
+        Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;
+        mats[0] = materials[(int) (GameManager.Instance.Settings.myScenarioObj.Cars[idx].Color) ];
+        vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials = mats;
+        
         GameObject[] vehicleCameras = vehicleInstance.transform.Find("Cameras").GetComponent<CameraList>().cameras;
 
         for(int i = 0; i < vehicleCameras.Length; i++) 
