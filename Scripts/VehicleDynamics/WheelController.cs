@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VehicleDynamics;
+using System.IO;
+using System;
 
 
 public class WheelController : MonoBehaviour
@@ -41,7 +43,7 @@ public class WheelController : MonoBehaviour
     public bool isHit;
     private Vector3 Ftotal;
     public float wheelStAngle, omega, omegaDot, wheelAngle, driveTorque;
-    public float currTyreTemp,q1,q2,q3,q4,thermalScaling;
+    public float currTyreTemp,q1,q2,q3,q4,thermalScaling; 
     public float DxEffective,DyEffective;
     void setWheelPos()
     {
@@ -214,7 +216,160 @@ public class WheelController : MonoBehaviour
         currTyreTemp = carController.vehicleParams.tAmb;
         setWheelPos();
         wheelAngle = 0.0f;
+
+        string configFileName;
+        if (wheelFL || wheelFR){
+            configFileName = "FrontAxleTireParams.json";
+        }
+        else{
+            configFileName = "RearAxleTireParams.json";
+        }
+        string fullPath = Path.Combine(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "PAIRSIM_config"), "Parameters/" + configFileName);
+        CheckAndCreateDefaultFile(fullPath, wheelFL || wheelFR ? defaultFrontAxleParams : defaultRearAxleParams);
+        LoadTyreParametersFromJson(fullPath);
+
     }
+    void LoadTyreParametersFromJson(string filePath)
+    {
+        string fullPath = Path.Combine(Application.dataPath, filePath);
+        if (File.Exists(fullPath))
+        {
+            string json = File.ReadAllText(fullPath);
+            TyreParametersConfig config = JsonUtility.FromJson<TyreParametersConfig>(json);
+            ApplyTyreParameters(config);
+        }
+        else
+        {
+            Debug.LogError("Config file not found: " + fullPath);
+        }
+    }
+//check to see if params file already exists, if not write the file
+    void CheckAndCreateDefaultFile(string filePath, TyreParametersConfig defaultParams)
+    {
+        if (!File.Exists(filePath))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            string json = JsonUtility.ToJson(defaultParams, true);
+            File.WriteAllText(filePath, json);
+        }
+    }
+    //this function will override the scriptable object
+    void ApplyTyreParameters(TyreParametersConfig config)
+    {
+        axleTyreParams.FzNom = (float)config.FzNom;
+        axleTyreParams.Dy = (float)config.Dy;
+        axleTyreParams.Dy2 = (float)config.Dy2;
+        axleTyreParams.Cy = (float)config.Cy;
+        axleTyreParams.syPeak = (float)config.syPeak;
+        axleTyreParams.relaxLenY = (float)config.relaxLenY;
+        axleTyreParams.Dx = (float)config.Dx;
+        axleTyreParams.Dx2 = (float)config.Dx2;
+        axleTyreParams.Cx = (float)config.Cx;
+        axleTyreParams.sxPeak = (float)config.sxPeak;
+        axleTyreParams.relaxLenX = (float)config.relaxLenX;
+        axleTyreParams.rollResForce = (float)config.rollResForce;
+        axleTyreParams.wheelInertia = (float)config.wheelInertia;
+        axleTyreParams.tyreRadius = (float)config.tyreRadius;
+        axleTyreParams.p1 = (float)config.p1;
+        axleTyreParams.p2 = (float)config.p2;
+        axleTyreParams.p3 = (float)config.p3;
+        axleTyreParams.p4 = (float)config.p4;
+        axleTyreParams.p5 = (float)config.p5;
+        axleTyreParams.p6 = (float)config.p6;
+        axleTyreParams.p7 = (float)config.p7;
+        axleTyreParams.mT = (float)config.mT;
+        axleTyreParams.cT = (float)config.cT;
+        axleTyreParams.hT = (float)config.hT;
+        axleTyreParams.ACp = (float)config.ACp;
+        axleTyreParams.numPointsFrictionMap = config.numPointsFrictionMap;
+        axleTyreParams.thermalFrictionMapInput = config.thermalFrictionMapInput;
+        axleTyreParams.thermalFrictionMapOutput = config.thermalFrictionMapOutput;
+    }
+
+    [System.Serializable]
+    public class TyreParametersConfig
+    {
+        public double FzNom;
+        public double Dy;
+        public double Dy2;
+        public double Cy;
+        public double syPeak;
+        public double relaxLenY;
+        public double Dx;
+        public double Dx2;
+        public double Cx;
+        public double sxPeak;
+        public double relaxLenX;
+        public double rollResForce;
+        public double wheelInertia;
+        public double tyreRadius;
+        public double p1, p2, p3, p4, p5, p6, p7, mT, cT, hT, ACp;
+        public int numPointsFrictionMap;
+        public float[] thermalFrictionMapInput;
+        public float[] thermalFrictionMapOutput;
+    }
+    private TyreParametersConfig defaultFrontAxleParams = new TyreParametersConfig
+    {
+        FzNom = 1700,
+        Dy = 1.5,
+        Dy2 = -0.2,
+        Cy = 1.5,
+        syPeak = 0.08725,
+        relaxLenY = 0.1,
+        Dx = 1.2,
+        Dx2 = -0.2,
+        Cx = 1.3,
+        sxPeak = 0.07,
+        relaxLenX = 0.1,
+        rollResForce = 60,
+        wheelInertia = 2,
+        tyreRadius = 0.326,
+        p1 = 0.001,
+        p2 = 0.0001,
+        p3 = 0.0001,
+        p4 = 0.00001,
+        p5 = 0.001,
+        p6 = 1.2,
+        p7 = 0.0003,
+        mT = 10,
+        cT = 3,
+        hT = 12,
+        ACp = 0.01,
+        numPointsFrictionMap = 5,
+        thermalFrictionMapInput = new float[] {0f, 30f, 70f, 100f, 130f},
+        thermalFrictionMapOutput = new float[] {0.8f, 0.9f, 1f, 1f, 0.8f}
+    };
+    private TyreParametersConfig defaultRearAxleParams = new TyreParametersConfig
+    {
+        FzNom = 2200,
+        Dy = 1.55,
+        Dy2 = -0.2,
+        Cy = 1.6,
+        syPeak = 0.078525,
+        relaxLenY = 0.1,
+        Dx = 1.7,
+        Dx2 = -0.2,
+        Cx = 1.4,
+        sxPeak = 0.06,
+        relaxLenX = 0.1,
+        rollResForce = 60,
+        wheelInertia = 2,
+        tyreRadius = 0.326,
+        p1 = 0.001,
+        p2 = 0.0001,
+        p3 = 0.0001,
+        p4 = 0.00001,
+        p5 = 0.001,
+        p6 = 1.2,
+        p7 = 0.0003,
+        mT = 10,
+        cT = 3,
+        hT = 12,
+        ACp = 0.01,
+        numPointsFrictionMap = 5,
+        thermalFrictionMapInput = new float[] {0f, 30f, 70f, 100f, 130f},
+        thermalFrictionMapOutput = new float[] {0.8f, 0.9f, 1f, 1f, 0.8f}
+    };
     void FixedUpdate() 
     {   
         getSteering();

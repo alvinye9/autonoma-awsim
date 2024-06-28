@@ -73,7 +73,7 @@ public class CarController : MonoBehaviour
 
     void calcWheelStAngle()
     {   
-        if (physicalActuator) //this is triggered
+        if (physicalActuator) 
         {
             steerAngleCmdBufPrev = steerAngleCmdBuf;
             steerAngleCmdBuf = HelperFunctions.pureDelay(steerAngleCmd,steerAngleCmdBufPrev, vehicleParams.steeringDelay);
