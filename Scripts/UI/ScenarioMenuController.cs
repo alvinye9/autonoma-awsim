@@ -180,21 +180,11 @@ public class ScenarioMenuController : MonoBehaviour
     void fillTrackDropdown(int idx)
     {   
         trackDropdown.ClearOptions(); 
-        int lvmsCount = 0;
 
         foreach(TrackParams track in LoadedTrackList.MyTrackList)
         {
             string displayName = track.TrackName;
-            // if (track.TrackName == "LVMS")
-            // {
-            //     lvmsCount++;
-            //     if (lvmsCount == 2)
-            //     {
-            //         displayName = "Kentucky Speedway";  //since Kentucky Speedway Oval is the same dimensions as LVMS Oval, just make it instantiate the same track
-            //     }
-            // }
             var op = new TMP_Dropdown.OptionData(displayName);
-            // Debug.Log(track.TrackName);
             trackDropdown.options.Add(op);
         }
         trackDropdown.value = idx;

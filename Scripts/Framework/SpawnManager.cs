@@ -27,6 +27,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject npcVehiclePrefab;
     public GameObject npc2VehiclePrefab;
     public GameObject kentuckyPrefab;
+    public GameObject imsPrefab;
     public Material[] materials;
     public RaceControlMenuController raceControlMenu;
     private TrackParams trackParams;
@@ -100,6 +101,12 @@ public class SpawnManager : MonoBehaviour
                 dx = 75f;
                 dy = -1.9f;
                 dz = -45f;
+
+            }  
+            else if (trackName.Equals("IMS.prefab")){
+                dx = 17f;
+                dy = 0f;
+                dz = 0f;
 
             }  
             float newX = spawnPosition.x + dx;
@@ -305,8 +312,6 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnNPCVehicle(int idx, bool isPit)
     {
-        // Debug.Log("Spawning First NPC Vehicle: "+idx);
-
         string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
         Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
@@ -324,6 +329,12 @@ public class SpawnManager : MonoBehaviour
                 dx = 75f;
                 dy = -1.9f;
                 dz = -45f;
+            } 
+            else if (trackName.Equals("IMS.prefab")){
+                dx = 17f;
+                dy = 0f;
+                dz = 0f;
+
             }   
             float newX = spawnPosition.x + dx;
             float newY = spawnPosition.y + dy; 
@@ -371,7 +382,6 @@ public class SpawnManager : MonoBehaviour
     }
     public void SpawnNPC2Vehicle(int idx, bool isPit)
     {
-        Debug.Log("Spawning Second NPC Vehicle: "+idx);
         string trackName = GameManager.Instance.Settings.myTrackParams.TrackName+".prefab";
         Vector3 spawnPosition = trackParams.carSpawnPositions[idx]; 
 
@@ -389,7 +399,13 @@ public class SpawnManager : MonoBehaviour
                 dx = 75f;
                 dy = -1.9f;
                 dz = -45f;
-            }  
+            }
+            else if (trackName.Equals("IMS.prefab")){
+                dx = 17f;
+                dy = 0f;
+                dz = 0f;
+
+            }   
             float newX = spawnPosition.x + dx;
             float newY = spawnPosition.y + dy; 
             float newZ = spawnPosition.z + dz;
@@ -438,9 +454,9 @@ public class SpawnManager : MonoBehaviour
         string bundleName;
 
         string trackName;
-        if(GameManager.Instance.Settings.myTrackParams.TrackName == "Kentucky Speedway")
+        if(GameManager.Instance.Settings.myTrackParams.TrackName == "Kentucky Speedway" || GameManager.Instance.Settings.myTrackParams.TrackName == "IMS")
         {
-            trackName = "LVMS.prefab"; //use the same LVMS prefab for Kentucky Speedway
+            trackName = "LVMS.prefab"; //just use LVMS prefab as a placeholder for custom tracks not in v2 unity package
         }
         else
         {
@@ -500,10 +516,24 @@ public class SpawnManager : MonoBehaviour
                 {
                     // Vector3 position = new Vector3(440f, -1.9f, -342f);
                     Vector3 position = new Vector3(438f, -1.9f, -346f);
-
                     Vector3 scale = new Vector3(0.97f, 1.08f, 0.96f); 
                     Quaternion rotation = Quaternion.Euler(0f, 129f, 0f); 
                     GameObject instantiatedTrack = Instantiate(kentuckyPrefab, position, rotation); //for new prefabs
+                    instantiatedTrack.transform.localScale = scale;
+                }
+                else if(GameManager.Instance.Settings.myTrackParams.TrackName == "IMS")
+                {
+                    // Vector3 position = new Vector3(-27f, -0.5f, 977f); //for 90 deg rotation
+                    // Quaternion rotation = Quaternion.Euler(0f, -90f, 0f); 
+
+                    // Vector3 position = new Vector3(-35f, -0.5f, 977f);
+                    // Quaternion rotation = Quaternion.Euler(0f, -90.5f, 0f); 
+
+                    Vector3 position = new Vector3(-43.5f, -0.5f, 977f);
+                    Quaternion rotation = Quaternion.Euler(0f, -91f, 0f); 
+
+                    Vector3 scale = new Vector3(1f, 1f, 1f); 
+                    GameObject instantiatedTrack = Instantiate(imsPrefab, position, rotation); //for new prefabs
                     instantiatedTrack.transform.localScale = scale;
                 }
                 else{

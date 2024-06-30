@@ -33,6 +33,7 @@ public class VehicleInputSubscriber : MonoBehaviour
     CanSubscriber canThrottleCommandSubscriber;
     CanSubscriber canBrakeCommandSubscriber;
     CanSubscriber canGearCommandSubscriber;
+    CanSubscriber canDashSwitchesCmdSubscriber; //FIXME
 
     void Start()
     {

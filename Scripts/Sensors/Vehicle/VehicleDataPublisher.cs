@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ public class VehicleDataPublisher : Publisher<VehicleData>
     public CanPublisher canBrakeReportExtdPublisher;
     public CanPublisher canBrakeReportExtd2Publisher;
     public CanPublisher canWheelSpeedReportPublisher;
+    public CanPublisher canDashSwitchesCmdPublisher;
 
 
     public void getPublisherParams()
@@ -86,6 +87,7 @@ public class VehicleDataPublisher : Publisher<VehicleData>
         canBrakeReportExtdPublisher = new CanPublisher("brake_report_extd", rosNamespace, qosSettings);
         canBrakeReportExtd2Publisher = new CanPublisher("brake_report_extd_2", rosNamespace, qosSettings);
         canWheelSpeedReportPublisher = new CanPublisher("wheel_speed_report", rosNamespace, qosSettings);
+        canDashSwitchesCmdPublisher = new CanPublisher("dash_switches_cmd", rosNamespace, qosSettings);
 
     }
     protected override void OnPublishMessage()
@@ -214,6 +216,11 @@ public class VehicleDataPublisher : Publisher<VehicleData>
             vehSim.ws_rear_right
         });
 
+        canDashSwitchesCmdPublisher.Publish(new List<double>{ //FIXME
+            0.0f, //driver_traction_aim_switch
+            0.0f, //driver_traction_range_switch
+            0.0f //brake_bias_aim_switch
+        });
     }
     public VehicleDataSimulator vehSim;
     public RaptorSM sm;
