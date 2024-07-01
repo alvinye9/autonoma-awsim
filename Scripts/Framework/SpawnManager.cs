@@ -415,7 +415,7 @@ public class SpawnManager : MonoBehaviour
         GameObject vehicleInstance = Instantiate(npc2VehiclePrefab, 
             spawnPosition,
             transform.rotation);
-
+        vehicleInstance.transform.Rotate(trackParams.carRotation);
         raceControlMenu.rosCars.Add(vehicleInstance);
 
         Material[] mats = vehicleInstance.transform.Find("Models").Find("Body").Find("Chassis").GetComponent<MeshRenderer>().materials;

@@ -28,9 +28,21 @@ public class ImuSimulator : MonoBehaviour
     public Vector3 imuAngle; // [deg]
     public Vector3 imuVelLocal,imuVelLocalPrev;
     public Rigidbody rb;
+    public float imuMean;
+    public float imuVariance;
+    public int imuSeed;
+    // private GaussianNoiseGenerator noiseGenerator;
     void Start()
     {
         rb = HelperFunctions.GetParentComponent<Rigidbody>(transform);
+
+
+        // imuMean = GameManager.Instance.Settings.mySensorSet.imuMean;
+        // imuVariance = GameManager.Instance.Settings.mySensorSet.imuVariance;
+        // imuSeed = GameManager.Instance.Settings.mySensorSet.imuSeed;
+
+        // noiseGenerator = new GaussianNoiseGenerator(imuMean, imuVariance, imuSeed);
+
     }
     void FixedUpdate()
     {   
@@ -52,6 +64,19 @@ public class ImuSimulator : MonoBehaviour
 
         // RPY, RHS +, [deg], NORTH = 0 for yaw, EAST = -90, [-180,180]
         imuAngle = HelperFunctions.unity2vehDynCoord(-imuAngle); 
+
+        // // Add Gaussian noise
+        // Vector3 imuGyroNoise = new Vector3((float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian());
+        // Vector3 imuAccelNoise = new Vector3((float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian());
+        // Vector3 imuAngleNoise = new Vector3((float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian(), (float)noiseGenerator.NextGaussian());
+
+        // Debug.Log("Gyro Noise: "+ imuGyroNoise);
+        // Debug.Log("Accel Noise: "+ imuAccelNoise);
+        // Debug.Log("Angle Noise: "+ imuAngleNoise);
+
+        // imuGyro += imuGyroNoise;
+        // imuAccel += imuAccelNoise;
+        // imuAngle += imuAngleNoise;
 
     }
 

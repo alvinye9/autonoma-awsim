@@ -1,5 +1,5 @@
 /* 
-Copyright 2023 Autonoma, Inc.
+Copyright 2024 Purdue AI Racing, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -140,7 +140,15 @@ public class SensorSet
     public bool EnableRRWheel;
     public bool EnableFrontDiff;
     public bool EnableRearDiff;
-
+    public float steerMean;
+    public float steerVariance;
+    public int steerSeed;
+    public float brakeMean;
+    public float brakeVariance;
+    public int brakeSeed;
+    public float throttleMean;
+    public float throttleVariance;
+    public int throttleSeed;
 
 
     public SensorSet()

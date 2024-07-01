@@ -48,11 +48,23 @@ public class SensorMenuController : MonoBehaviour
     public TMP_Dropdown sensorSetDropdown;
     
     public TMP_InputField sensorSetNameInput;
+    public TMP_InputField steerMeanInput;
+    public TMP_InputField steerVarianceInput;
+    public TMP_InputField steerSeedInput;
+
+    public TMP_InputField brakeMeanInput;
+    public TMP_InputField brakeVarianceInput;
+    public TMP_InputField brakeSeedInput;
+
+    public TMP_InputField throttleMeanInput;
+    public TMP_InputField throttleVarianceInput;
+    public TMP_InputField throttleSeedInput;
     
     private void Awake() {}
 
     private void Start() 
     {
+        // Update the GUI based on toggle values
         enableTopToggle.isOn = scenarioMenu.tmpSensorSet.EnableTop;
         enableBottomToggle.isOn = scenarioMenu.tmpSensorSet.EnableBottom;
         enableVectorNavToggle.isOn = scenarioMenu.tmpSensorSet.EnableVectorNav;
@@ -63,6 +75,28 @@ public class SensorMenuController : MonoBehaviour
         enableRRWheelToggle.isOn = scenarioMenu.tmpSensorSet.EnableRRWheel;
         enableFrontDiffToggle.isOn = scenarioMenu.tmpSensorSet.EnableFrontDiff;
         enableRearDiffToggle.isOn = scenarioMenu.tmpSensorSet.EnableRearDiff;
+
+        // Update the GUI Input Fields based on gaussian noise values if at least one values is not zero (default)
+        if (scenarioMenu.tmpSensorSet.steerMean != 0f ||
+            scenarioMenu.tmpSensorSet.steerVariance != 0f ||
+            scenarioMenu.tmpSensorSet.steerSeed != 0 ||
+            scenarioMenu.tmpSensorSet.brakeMean != 0f ||
+            scenarioMenu.tmpSensorSet.brakeVariance != 0f ||
+            scenarioMenu.tmpSensorSet.brakeSeed != 0 ||
+            scenarioMenu.tmpSensorSet.throttleMean != 0f ||
+            scenarioMenu.tmpSensorSet.throttleVariance != 0f ||
+            scenarioMenu.tmpSensorSet.throttleSeed != 0)
+            {
+                steerMeanInput.text = scenarioMenu.tmpSensorSet.steerMean.ToString();
+                steerVarianceInput.text = scenarioMenu.tmpSensorSet.steerVariance.ToString();
+                steerSeedInput.text = scenarioMenu.tmpSensorSet.steerSeed.ToString();
+                brakeMeanInput.text = scenarioMenu.tmpSensorSet.brakeMean.ToString();
+                brakeVarianceInput.text = scenarioMenu.tmpSensorSet.brakeVariance.ToString();
+                brakeSeedInput.text = scenarioMenu.tmpSensorSet.brakeSeed.ToString();
+                throttleMeanInput.text = scenarioMenu.tmpSensorSet.throttleMean.ToString();
+                throttleVarianceInput.text = scenarioMenu.tmpSensorSet.throttleVariance.ToString();
+                throttleSeedInput.text = scenarioMenu.tmpSensorSet.throttleSeed.ToString();
+            }
 
         mainMenuButton.onClick.AddListener( GameManager.Instance.UIManager.OnMainMenuPressed );
         saveSensorSetButton.onClick.AddListener( saveSensorSetButtonPressed );
@@ -85,6 +119,18 @@ public class SensorMenuController : MonoBehaviour
 
         enableFrontDiffToggle.onValueChanged.AddListener(delegate { enableFrontDiffToggleChanged(enableFrontDiffToggle); } );
         enableRearDiffToggle.onValueChanged.AddListener(delegate { enableRearDiffToggleChanged(enableRearDiffToggle); } );
+
+        steerMeanInput.onEndEdit.AddListener(delegate { steerMeanInputChanged(steerMeanInput); } );
+        steerVarianceInput.onEndEdit.AddListener(delegate { steerVarianceInputChanged(steerVarianceInput); } );
+        steerSeedInput.onEndEdit.AddListener(delegate { steerSeedInputChanged(steerSeedInput); } );
+
+        brakeMeanInput.onEndEdit.AddListener(delegate { brakeMeanInputChanged(brakeMeanInput); } );
+        brakeVarianceInput.onEndEdit.AddListener(delegate { brakeVarianceInputChanged(brakeVarianceInput); } );
+        brakeSeedInput.onEndEdit.AddListener(delegate { brakeSeedInputChanged(brakeSeedInput); } );
+
+        throttleMeanInput.onEndEdit.AddListener(delegate { throttleMeanInputChanged(throttleMeanInput); } );
+        throttleVarianceInput.onEndEdit.AddListener(delegate { throttleVarianceInputChanged(throttleVarianceInput); } );
+        throttleSeedInput.onEndEdit.AddListener(delegate { throttleSeedInputChanged(throttleSeedInput); } );
     }
 
     private void OnEnable() 
@@ -185,6 +231,133 @@ public class SensorMenuController : MonoBehaviour
         updateTmpSensorSet();
         scenarioMenu.tmpSensorSet.EnableRearDiff = enableRearDiffToggle.isOn;
     }
+    private void steerMeanInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.steerMean = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void steerVarianceInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.steerVariance = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void steerSeedInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (int.TryParse(input.text, out int value))
+        {
+            scenarioMenu.tmpSensorSet.steerSeed = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void brakeMeanInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.brakeMean = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void brakeVarianceInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.brakeVariance = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void brakeSeedInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (int.TryParse(input.text, out int value))
+        {
+            scenarioMenu.tmpSensorSet.brakeSeed = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+
+    private void throttleMeanInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.throttleMean = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void throttleVarianceInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (float.TryParse(input.text, out float value))
+        {
+            scenarioMenu.tmpSensorSet.throttleVariance = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
+    private void throttleSeedInputChanged(TMP_InputField input)
+    {
+        updateTmpSensorSet();
+        if (int.TryParse(input.text, out int value))
+        {
+            scenarioMenu.tmpSensorSet.throttleSeed = value;
+            Debug.Log(value);
+        }
+        else
+        {
+            Debug.LogError("Failed to Parse value: " + input.text);
+        }
+
+    }
 
     private void saveSensorSetButtonPressed()
     {
@@ -234,6 +407,7 @@ public class SensorMenuController : MonoBehaviour
     {   
         // Put all input data to tmpSensorSet object
         scenarioMenu.tmpSensorSet.Name = sensorSetNameInput.text;
+
         // Debug.Log("Name of Sensor Set: " + scenarioMenu.tmpSensorSet.Name);
     }
 

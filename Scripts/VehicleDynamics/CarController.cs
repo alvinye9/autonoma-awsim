@@ -40,6 +40,9 @@ public class CarController : MonoBehaviour
     public bool physicalActuator = false;
     public VehicleState vehicleState;
     public Powertrain powertrain;
+    private GaussianNoiseGenerator steerNoiseGenerator;
+    private GaussianNoiseGenerator brakeNoiseGenerator;
+    private GaussianNoiseGenerator throttleNoiseGenerator;
     void getState()
     {
         // take values from unity system and transform into VD coords
@@ -75,17 +78,23 @@ public class CarController : MonoBehaviour
     {   
         if (physicalActuator) 
         {
+            // Debug.Log("Physical Actuator Used for Calculating Steering Angle");
             steerAngleCmdBufPrev = steerAngleCmdBuf;
             steerAngleCmdBuf = HelperFunctions.pureDelay(steerAngleCmd,steerAngleCmdBufPrev, vehicleParams.steeringDelay);
             steerAngleApplied = steerAngleCmdBuf[vehicleParams.steeringDelay-1];
             // Apply low pass filter and rate limiting to prevent abrupt changes in the applied steering angle
             steerAngleApplied = HelperFunctions.lowPassFirstOrder(steerAngleApplied,steerAngleAppliedPrev,vehicleParams.steeringBandwidth);
-            steerAngleApplied = HelperFunctions.rateLimit(steerAngleApplied, steerAngleAppliedPrev , Mathf.Abs(vehicleParams.steeringRate/vehicleParams.steeringRatio));
+            steerAngleApplied = HelperFunctions.rateLimit(steerAngleApplied, steerAngleAppliedPrev , Mathf.Abs(vehicleParams.steeringRate/vehicleParams.steeringRatio)); //steerAngleApplied [rad]
+            
+            // Add Gaussian noise
+            float steerNoise = (float)steerNoiseGenerator.NextGaussian();
+            steerAngleApplied += steerNoise;
+
             steerAngleAppliedPrev = steerAngleApplied;
-            // Debug.Log("Steer Angle Cmd: " + steerAngleCmd + " Steer Angle Applied: " + steerAngleApplied);
         }
         else
         {
+            Debug.Log("Physical Actuator NOT used for Calculating Steering Angle");
             steerAngleApplied = steerAngleCmd;
         }
     }
@@ -98,7 +107,12 @@ public class CarController : MonoBehaviour
             brakeCmdBuf = HelperFunctions.pureDelay(brakeCmd,brakeCmdBufPrev, vehicleParams.brakeDelay); // buffer the incoming commands
             brakeApplied = brakeCmdBuf[vehicleParams.brakeDelay-1]; // select the latest of the buffer for the delay
             brakeApplied = HelperFunctions.lowPassFirstOrder(brakeApplied,brakeAppliedPrev, vehicleParams.brakeBandwidth);
-            brakeApplied = HelperFunctions.rateLimit(brakeApplied, brakeAppliedPrev , vehicleParams.brakeRate);
+            brakeApplied = HelperFunctions.rateLimit(brakeApplied, brakeAppliedPrev , vehicleParams.brakeRate); //brakeApplied [%]
+
+            // Add Gaussian noise
+            float brakeNoise = (float)brakeNoiseGenerator.NextGaussian();
+            brakeApplied += brakeNoise;
+
             brakeAppliedPrev = brakeApplied;
             TBrake = brakeApplied * vehicleParams.brakeKpaToNm;
         }
@@ -127,6 +141,11 @@ public class CarController : MonoBehaviour
         float saturatedRpmEngine = Mathf.Clamp(rpmEngine,vehicleParams.minEngineMapRpm,vehicleParams.maxEngineRpm);
         thrApplied = HelperFunctions.lowPassFirstOrder(throttleCmd,thrAplliedPrev, vehicleParams.throttleBandwidth);
         thrApplied = HelperFunctions.rateLimit(thrApplied, thrAplliedPrev , vehicleParams.throttleRate);
+
+        // Add Gaussian noise
+        float throttleNoise = (float)throttleNoiseGenerator.NextGaussian();
+        thrApplied += throttleNoise;
+            
         thrAplliedPrev = thrApplied;
 
         float torquePercentage = HelperFunctions.lut1D(vehicleParams.numPointsThrottleMap,
@@ -169,6 +188,23 @@ public class CarController : MonoBehaviour
         carBody.mass = vehicleParams.mass;
         carBody.inertiaTensor = vehicleParams.Inertia;
         carBody.centerOfMass = vehicleParams.centerOfMass;
+
+        //Gaussian Noise Simulators
+        float steerMean = GameManager.Instance.Settings.mySensorSet.steerMean;
+        float steerVariance = GameManager.Instance.Settings.mySensorSet.steerVariance;
+        int steerSeed = GameManager.Instance.Settings.mySensorSet.steerSeed;
+        steerNoiseGenerator = new GaussianNoiseGenerator(steerMean, steerVariance, steerSeed);
+
+        float brakeMean = GameManager.Instance.Settings.mySensorSet.brakeMean;
+        float brakeVariance = GameManager.Instance.Settings.mySensorSet.brakeVariance;
+        int brakeSeed = GameManager.Instance.Settings.mySensorSet.brakeSeed;
+        brakeNoiseGenerator = new GaussianNoiseGenerator(brakeMean, brakeVariance, brakeSeed);
+
+        float throttleMean = GameManager.Instance.Settings.mySensorSet.throttleMean;
+        float throttleVariance = GameManager.Instance.Settings.mySensorSet.throttleVariance;
+        int throttleSeed = GameManager.Instance.Settings.mySensorSet.throttleSeed;
+        throttleNoiseGenerator = new GaussianNoiseGenerator(throttleMean, throttleVariance, throttleSeed);
+    
     }
 
     void UpdateVehicleParamsFromMenu()

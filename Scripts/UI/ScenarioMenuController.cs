@@ -113,12 +113,19 @@ public class ScenarioMenuController : MonoBehaviour
         trackDropdown.value = tmpScenarioObj.SelectedTrack;
         trackDropdown.RefreshShownValue();
 
-        // Fill latLonHeightYawInput fields with the values from the loaded scenario
-        latLonHeightYawInput[0].text = tmpScenarioObj.lat_input.ToString();
-        latLonHeightYawInput[1].text = tmpScenarioObj.lon_input.ToString();
-        latLonHeightYawInput[2].text = tmpScenarioObj.height_input.ToString();
-        latLonHeightYawInput[3].text = tmpScenarioObj.yaw_input.ToString();
+        // Fill latLonHeightYawInput fields with the values from the loaded scenario if at least one of the values is not 0
+        if (tmpScenarioObj.lat_input != 0f ||
+            tmpScenarioObj.lon_input != 0f ||
+            tmpScenarioObj.lon_input != 0f )
+            {
+            latLonHeightYawInput[0].text = tmpScenarioObj.lat_input.ToString();
+            latLonHeightYawInput[1].text = tmpScenarioObj.lon_input.ToString();
+            latLonHeightYawInput[2].text = tmpScenarioObj.height_input.ToString();
+            latLonHeightYawInput[3].text = tmpScenarioObj.yaw_input.ToString();
+            }
 
+        hotStartToggle.isOn = tmpScenarioObj.HotStart;
+        pitToggle.isOn = tmpScenarioObj.IsPit;
 
         saveScenarioButtonPressed();
 
@@ -443,6 +450,17 @@ public class ScenarioMenuController : MonoBehaviour
             tmpSensorSet.EnableRRWheel = true;
             tmpSensorSet.EnableFrontDiff = true;
             tmpSensorSet.EnableRearDiff = true;
+
+            // Gaussian Noise values
+            tmpSensorSet.steerMean = 0f;
+            tmpSensorSet.steerVariance = 0f;
+            tmpSensorSet.steerSeed = 0;
+            tmpSensorSet.brakeMean = 0f;
+            tmpSensorSet.brakeVariance = 0f;
+            tmpSensorSet.brakeSeed = 0;
+            tmpSensorSet.throttleMean = 0f;
+            tmpSensorSet.throttleVariance = 0f;
+            tmpSensorSet.throttleSeed = 0;
 
             saveSensorSet(tmpSensorSet);
         }
